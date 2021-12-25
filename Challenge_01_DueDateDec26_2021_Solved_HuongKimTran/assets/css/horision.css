@@ -165,7 +165,7 @@
       font-size: 36px;     
   }  
   
-  /* change .footer to footer to work with html5 sematic footer tag instead*/
+  /* Change .footer to css footer selector to work with html5 sematic footer tag instead*/
   footer {
       padding: 30px; /* top, right, bottom, left all have padding of 30 pixels */
       clear: both;
@@ -173,6 +173,7 @@
       text-align: center;      
   }
   
+  /* Heading for rendering footer content */
   footer h2 {
       font-size: 20px;
       font-weight: normal; 
