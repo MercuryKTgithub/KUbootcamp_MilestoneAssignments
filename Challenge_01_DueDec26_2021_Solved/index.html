@@ -1,21 +1,36 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<!-- Attribute [lang] specifies the US English language, aka "en-us" of the text content on the 
+     webpage, so that search engines can this information to return language specific results -->
+<!-- Also used by screen readers that switch language profiles to provide the correct pronunciation. -->
+<html lang="en-us"> 
 
 <head>
-    <!-- allow wider range of character sets to be included such as unicode characters -->
+    <!-- Allow wider range of character sets to be included such as Non-ASCII/unicode-characters, just in case, that can render special letters in languages like German, Vietnamese -->
     <meta charset="UTF-8" /> 
+    
+    <!-- Make a reference to the stylesheet named horision.css that handles this page's look and feels-->
     <link rel="stylesheet" href="./assets/css/horision.css">
+
     <!-- Add descriptive title per [page title] - [site title] structure of no more than 60 characters -->
     <title>HTML CSS Git Challenge: Code Refactor - KU Coding Bootcamp</title>
 </head>
 
 <body>
+    <!-- Change [div] tag to descriptive html5 semantic [header] element-->
     <header class="header">
-        <h1>Hori<span class="seo">seo</span>n</h1>
-        <!-- Change generic div to nav  -->
+        <!-- Branding -->
+        <h1>Hori<span class="seo">seo</span>n</h1> 
+        <!-- The partial inline text is highlighted by css-class seo, in this case, "seo" text-color will be different from the rest-->
+
+        <!-- Change generic div to html5 semantic nav element to signify the navigation construction of the webpage  -->
         <nav>
+            <!-- Start of un-ordered list to design the page's navigation 'menu'-->
             <ul>
+                <!-- Menu item's text -->
                 <li>
+                    <!-- use href attribute's value to specify where the hyperlink will go -->
+                    <!-- the phrase in parentheses starts with the pound sign indicates the position 
+                         of the webpage section unique-identifier that the brower will jump to when the hyperlink is clicked  -->
                     <a href="#search-engine-optimization">Search Engine Optimization</a>
                 </li>
                 <li>
@@ -27,10 +42,16 @@
             </ul>
         </nav>
     </header>
+
+    <!-- Change all generic [div] tags to html5 semantic [sections] elements respectively :-->
+    
+    <!-- Flashy section at the top of the landing page to grab visitors' attention:  -->
     <section class="hero"></section>
+
+    <!-- Main content: -->
     <section class="content">
         <!-- Change 3 [div] elements to [article] elements so that all the content inside each element is related to one another -->
-        <!-- Add missing id attribute on this article tag per navigation hyperlink in the header -->
+            <!-- Add missing id attribute on this article tag per navigation hyperlink in the header -->
         <article id="search-engine-optimization" class="search-engine-optimization">
             <!-- Add [alt] attribute with description for search engine and screen reader to pick up-->
             <img src="./assets/images/search-engine-optimization.jpg" class="float-left" alt="Search Engine Optimization" />
@@ -56,10 +77,14 @@
             </p>
         </article>
     </section>
+
+    <!-- Right column content: -->
     <section class="benefits">
+        <!-- Html5 semantic element [article] here to replace [div] to encapsulate related content (h3, img, and p) within,
+        allowing the brower and screen reader to have an easier time reading the content -->
         <article class="benefit-lead">
             <h3>Lead Generation</h3>
-             <!-- Decorative image with empty value for alt attribute -->
+             <!-- Decorative image, thus [alt] attribute gets empty value (not neccessary to explain specificall what the image is about)-->
             <img src="./assets/images/lead-generation.png" alt=""/>
             <p>
                 Inbound strategies for lead generation require less work for your business, bringing customers directly to your website.
@@ -67,7 +92,7 @@
         </article>
         <article class="benefit-brand">
             <h3>Brand Awareness</h3>
-             <!-- Decorative image with empty value for alt attribute -->
+             <!-- Decorative image, thus [alt] attribute gets empty value  -->
             <img src="./assets/images/brand-awareness.png" alt=""/>
             <p>
                 Users find your business through paid and organic searches, increasing the search ranking and visibility for your business.
@@ -75,15 +100,17 @@
         </article>
         <article class="benefit-cost">
             <h3>Cost Management</h3>
-            <!-- Decorative image with empty value for alt attribute -->
+            <!-- Decorative image, thus [alt] attribute gets empty value  -->
             <img src="./assets/images/cost-management.png" alt=""/>
             <p>
                 As the search ranking for your business increases, your advertising costs decrease, and you no longer need to advertise your page.
             </p>
         </article>
     </section>
-    <!-- Footer div to be denote by sematic footer tags instead -->
-    <!-- Applied html sematic footer tag, remove [class=] attribute reference to .footer  -->
+
+    <!-- Footer div to be denote by semantic footer tags instead -->
+    <!-- Applied html sematic footer element that corresponds to its css footer selector in the style-sheet, thus effectivly  
+         remove redundant [class="".footer"] attribute that previously used for reference -->
     <footer>
         <h2>Made with ❤️️ by Horiseon</h2>
         <p>

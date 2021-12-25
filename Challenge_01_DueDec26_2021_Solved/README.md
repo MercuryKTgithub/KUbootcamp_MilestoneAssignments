@@ -1,2 +1,3 @@
-# Challenge 01 - Due Dec 26 2021 - Solved
-# Full Name: Tran, Huong Kim  
+# Student's Full Name: Tran, Huong Kim  
+# KU Coding Bootcamp Challenge 01
+# HTML CSS Git Challenge: Code Refactor

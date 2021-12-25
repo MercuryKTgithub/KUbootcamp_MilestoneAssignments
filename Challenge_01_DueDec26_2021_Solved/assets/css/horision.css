@@ -1,43 +1,47 @@
+/* The asterisk univeral selector here to tell the properties within are applied to all type of element in an HTML page */
 * {
+      /* border-box tells the browser to account for any border and padding-values 
+         that are specified for an element's width and height - This likely cause the 
+         "real' content box element to shrink to absorb that extra width or height */
       box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-  }
+      padding: 0; /* top, right, bottom, left all have zero padding */
+      margin: 0;  /* top, right, bottom, left all have margins of zero pixel */ 
+  } 
 
-
-  
   body {
       background-color: #d9dcd6;
   }
   
   /* apply styles to <header> */
   header {
-      padding: 20px;
+      padding: 20px; /* top and bottom both have padding value of 20px */
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
       background-color: #2a607c;
       color: #ffffff;
   }
   
   header h1 {
-      display: inline-block;
+      /* choose inline rendering manner to be displayed on the same line with naviagtion list items */
+      display: inline-block; 
       font-size: 48px;
   }
   
   header h1 .seo {
+      /* branding text that applies this class will have light grey color as indicated */
       color: #d9dcd6;
   }
   
-  /* apply styles to <nav> within <header> */
+  /* apply styles to <nav> located within <header> */
   header nav {
       padding-top: 15px;
       margin-right: 20px;
-      float: right;
+      float: right; /* will appear at the right of the screen */
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       font-size: 20px;
   }
   
   header nav ul {
-      list-style-type: none;
+      list-style-type: none; /* no specific bullet type*/
   }
   
   /* choose inline rendering manner for all menu-items to be displayed on the same line  */
@@ -49,7 +53,7 @@
   /* apply styles to hyperlink text within header */
   header a {
       color: #ffffff;
-      text-decoration: none;
+      text-decoration: none; /* no additional special rendering such as underline and|or overline */
   }
   
   /* defined the fontsize of paragraph-text within header */
@@ -57,40 +61,46 @@
       font-size: 16px;
   }
   
+  /* Top of the landing page */
   .hero {
-      height: 800px;
+      /* great height and width to grab visitors' attention*/
+      height: 800px; 
       width: 100%;
       margin-bottom: 25px;
       background-image: url("../images/digital-marketing-meeting.jpg");
-      background-size: cover;
+      /* 'cover' tells the browser to make sure the background-image always covers the entire container, even though image might not be whole: */
+      background-size: cover; 
       background-position: center;
   }
   
-  /* What tags does this apply to? Can be redefined in a meaningful class */
-  /* Does it used as second class css reference */
-  /* Utility classes that can be applied to control position of any float-based element  */
+  /* This class has a float property that is set to "left" which will cause any element, such as an image, that employs   
+  this property will be placed on the left side of the element's container regarless the normal flow of the page */
   .float-left {
       float: left;
       margin-right: 25px;
   }
   
+  /* This class has a float property that is set to "right" which will cause any element that employs this property  
+  will be placed on the right side of its container regarless the normal flow of the page */
   .float-right {
       float: right;
       margin-left: 25px;      
   }
 
   .content {
-      width: 75%;
+      width: 75%; /* percentage of the webpage browser's width instead of specify a specific pixel amount*/
       display: inline-block;
       margin-left: 20px;
   }
-  
+
   .benefits {
       margin-right: 20px;
       padding: 20px;
-      clear: both;
+      /* clear so as to make sure this element's position will not depend or follow the flow of its preceeding 
+         floating elements but on its own specifiy property value [float left], thus achieve a precise placement */
+      clear: both;       
       float: right;
-      width: 20%;
+      width: 20%; /* the width of the right column appears under the hero session */
       height: 100%;
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       background-color: #2589bd;
@@ -123,130 +133,47 @@
       margin-bottom: 10px;
       text-align: center;
   }
-  /* .benefit-lead h3 {
-      margin-bottom: 10px;
-      text-align: center;
-  }
-  
-  .benefit-brand h3 {
-      margin-bottom: 10px;
-      text-align: center;
-  }
-  
-  .benefit-cost h3 {
-      margin-bottom: 10px;
-      text-align: center;
-  } */
 
   /* Applied the same grouping style rule to the [img] selector of the 3 different css classes for its identical properties and values*/
   .benefit-lead img, .benefit-brand img, .benefit-cost img{
-      display: block;
-      margin: 10px auto;
-      max-width: 150px;
+      display: block; /* appear at the start of a new line */
+      margin: 10px auto; /* center me, a non-text content, horizontally while giving me top and bottom margins of 10 pixels each direction */
+      /* Image width is within a reasonable size per designed layout - This setting also ensure that the images are  
+         not truncated and/or do not obscure other content when the page is zoomed to increase text size. */
+      max-width: 150px; 
   }
-
-  /* .benefit-lead img {
-      display: block;
-      margin: 10px auto;
-      max-width: 150px;
-  }
-  
-  .benefit-brand img {
-      display: block;
-      margin: 10px auto;
-      max-width: 150px;
-  }
-  
-  .benefit-cost img {
-      display: block;
-      margin: 10px auto;
-      max-width: 150px;
-  } */
   
    /* Applied the same grouping style rule on the 3 different classes that share 6 identical properties and values*/
   .search-engine-optimization, .online-reputation-management, .social-media-marketing{
       margin-bottom: 20px;
-      padding: 50px;
+      padding: 50px; /* top, right, bottom, left all have padding of 50 pixels */
       height: 300px;
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       background-color: #0072bb;
       color: #ffffff;
   }
-  /* .search-engine-optimization {
-      margin-bottom: 20px;
-      padding: 50px;
-      height: 300px;
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-      background-color: #0072bb;
-      color: #ffffff;
-  }
-  
-  .online-reputation-management {
-      margin-bottom: 20px;
-      padding: 50px;
-      height: 300px;
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-      background-color: #0072bb;
-      color: #ffffff;
-  }
-  
-  .social-media-marketing {
-      margin-bottom: 20px;
-      padding: 50px;
-      height: 300px;
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-      background-color: #0072bb;
-      color: #ffffff;
-  } */
-  
-
-  /* .search-engine-optimization img {
-      max-height: 200px;
-  }
-  
-  .online-reputation-management img {
-    max-height: 200px;
-  }
-  
-  .social-media-marketing img {
-    max-height: 200px;
-  } */
 
   /* Applied the same grouping rule to the [img] selector of the 3 different css classes for its identical properties and values*/
   .search-engine-optimization img, .online-reputation-management img, .social-media-marketing img{
-    max-height: 200px;
-  }
-  
-  /* .search-engine-optimization h2 {
-      margin-bottom: 20px;
-      font-size: 36px;
-  }
-  
-  .online-reputation-management h2 {
-      margin-bottom: 20px;
-      font-size: 36px;
-  }
-  
-  .social-media-marketing h2 {
-      margin-bottom: 20px;
-      font-size: 36px;
-  } */
+    max-height: 200px; /*max-height overrides height if the real image's vertical measurement is too big */
+  }    
 
   /* Applied the same grouping rule to the [h2] selector of the 3 different css classes for its identical properties and values*/
   .search-engine-optimization h2, .online-reputation-management h2, .social-media-marketing h2{
       margin-bottom: 20px;
-      font-size: 36px;
-  }
+      font-size: 36px;     
+  }  
   
   /* change .footer to footer to work with html5 sematic footer tag instead*/
   footer {
-      padding: 30px;
+      padding: 30px; /* top, right, bottom, left all have padding of 30 pixels */
       clear: both;
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-      text-align: center;
+      text-align: center;      
   }
   
   footer h2 {
       font-size: 20px;
+      font-weight: normal; 
   }
   
