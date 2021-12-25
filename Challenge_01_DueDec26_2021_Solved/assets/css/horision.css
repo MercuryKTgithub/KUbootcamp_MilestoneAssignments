@@ -1,4 +1,5 @@
-/* The asterisk univeral selector here to tell the properties within are applied to all type of element in an HTML page */
+/* The asterisk univeral selector tells the browser that the properties specified   
+   within the {} are applied to all types of elements in an HTML page */
 * {
       /* border-box tells the browser to account for any border and padding-values 
          that are specified for an element's width and height - This likely cause the 
@@ -12,7 +13,7 @@
       background-color: #d9dcd6;
   }
   
-  /* apply styles to <header> */
+  /* Apply styles to <header> */
   header {
       padding: 20px; /* top and bottom both have padding value of 20px */
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -21,7 +22,7 @@
   }
   
   header h1 {
-      /* choose inline rendering manner to be displayed on the same line with naviagtion list items */
+      /* choose inline rendering manner to be displayed on the same line with navigation list items */
       display: inline-block; 
       font-size: 48px;
   }
@@ -31,7 +32,7 @@
       color: #d9dcd6;
   }
   
-  /* apply styles to <nav> located within <header> */
+  /* Apply styles to <nav> located within <header> */
   header nav {
       padding-top: 15px;
       margin-right: 20px;
@@ -44,19 +45,19 @@
       list-style-type: none; /* no specific bullet type*/
   }
   
-  /* choose inline rendering manner for all menu-items to be displayed on the same line  */
+  /* Choose inline rendering manner for all menu-items to be displayed on the same line  */
   header nav ul li {
       display: inline-block;
       margin-left: 25px;      
   }
   
-  /* apply styles to hyperlink text within header */
+  /* Apply styles to hyperlink text within header */
   header a {
       color: #ffffff;
       text-decoration: none; /* no additional special rendering such as underline and|or overline */
   }
   
-  /* defined the fontsize of paragraph-text within header */
+  /* Define the fontsize of paragraph-text within header */
   header p {
       font-size: 16px;
   }
@@ -100,7 +101,7 @@
          floating elements but on its own specifiy property value [float left], thus achieve a precise placement */
       clear: both;       
       float: right;
-      width: 20%; /* the width of the right column appears under the hero session */
+      width: 20%; /* the width of the right column that appears under the hero session */
       height: 100%;
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       background-color: #2589bd;
@@ -136,14 +137,14 @@
 
   /* Applied the same grouping style rule to the [img] selector of the 3 different css classes for its identical properties and values*/
   .benefit-lead img, .benefit-brand img, .benefit-cost img{
-      display: block; /* appear at the start of a new line */
+      display: block; /* allows element to appear at the start of a new line */
       margin: 10px auto; /* center me, a non-text content, horizontally while giving me top and bottom margins of 10 pixels each direction */
-      /* Image width is within a reasonable size per designed layout - This setting also ensure that the images are  
-         not truncated and/or do not obscure other content when the page is zoomed to increase text size. */
+      /* Specifies image's width to be within a reasonable size per designed layout - This setting also ensures that the image will not 
+         not truncated and/or does not obscure other content when the page is zoomed to increase text size. */
       max-width: 150px; 
   }
   
-   /* Applied the same grouping style rule on the 3 different classes that share 6 identical properties and values*/
+   /* Applied the same grouping style rule on the 3 different classes that share 6 identical properties and values eliminate code duplicates*/
   .search-engine-optimization, .online-reputation-management, .social-media-marketing{
       margin-bottom: 20px;
       padding: 50px; /* top, right, bottom, left all have padding of 50 pixels */
@@ -153,12 +154,12 @@
       color: #ffffff;
   }
 
-  /* Applied the same grouping rule to the [img] selector of the 3 different css classes for its identical properties and values*/
+  /* Applied the same grouping rule to the [img] selector of the 3 different css classes for its identical properties and values to eliminate code duplicates*/
   .search-engine-optimization img, .online-reputation-management img, .social-media-marketing img{
-    max-height: 200px; /*max-height overrides height if the real image's vertical measurement is too big */
+    max-height: 200px; /* max-height overrides height if the real image's vertical measurement is too big */
   }    
 
-  /* Applied the same grouping rule to the [h2] selector of the 3 different css classes for its identical properties and values*/
+  /* Applied the same grouping rule to the [h2] selector of the 3 different css classes for its identical properties and values eliminate code duplicates*/
   .search-engine-optimization h2, .online-reputation-management h2, .social-media-marketing h2{
       margin-bottom: 20px;
       font-size: 36px;     
