@@ -75,14 +75,14 @@
   }
   
   /* This class has a float property that is set to "left" which will cause any element, such as an image, that employs   
-  this property will be placed on the left side of the element's container regarless the normal flow of the page */
+  this property will be placed on the left side of the element's container regarless of the normal flow of the page */
   .float-left {
       float: left;
       margin-right: 25px;
   }
   
   /* This class has a float property that is set to "right" which will cause any element that employs this property  
-  will be placed on the right side of its container regarless the normal flow of the page */
+  will be placed on the right side of its container regarless of the normal flow of the page */
   .float-right {
       float: right;
       margin-left: 25px;      
