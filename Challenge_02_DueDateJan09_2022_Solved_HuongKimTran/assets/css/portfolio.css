@@ -23,11 +23,11 @@ body {
 }
 
 header {
-    /*background-image: url("../images/hero-bg-tulips.jpg");   */
-   background-size: cover;  /*tells the browser to make sure the image always covers the entire container, image might not be whole*/
-   background-position: center;  /*affect the bg image position*/
-   background-attachment: fixed;  /*places the image relative to the viewport instead of the element. */
-   background-position: 100%; /*to better match the mock-up */
+    
+   background-size: cover;  /* tells the browser to make sure the image always covers the entire container, image might not be whole*/
+   background-position: center;  /* affect the bg image position*/
+   background-attachment: fixed;  /* places the image relative to the viewport instead of the element. */
+   background-position: 100%; /* percentage shall match with hero section's bg to line them up */
 
    padding: 0 0 15px 0; /*20px 35px;*/
    background-color: var(--tertiary-color);
@@ -41,7 +41,7 @@ header {
    top: 0; /* 30px; */
    /* Keep this header element on top of the stack, aka to the front */
    z-index: 9999;
-   /* to avoid future conflicts although the number seems like overkill */
+   /* To avoid future conflicts although the number seems like overkill */
 }
 
  header h1 {
@@ -97,7 +97,7 @@ header {
  }
   
 
- /* Footer starts here |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
+ /* Footer starts here |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
  footer {
    background: var(--primary-color);
    width: 100%;
@@ -139,7 +139,7 @@ header {
      background-size: cover; /* tells the browser to make sure the image always covers the entire container, image might not be whole*/
      background-position: center; /* affect the bg image position*/    
      background-attachment: fixed; /* places the image relative to the viewport instead of the element. */
-      /* background-position: 100%; use same percentage to make sure the hero and the header nav pictures line up */
+      /* background-position: 100%; use same percentage to make sure the hero and the header nav pictures line up, hero bg graphics not in use */
      display: flex;
      justify-content: right;
      flex-wrap: wrap;
@@ -172,7 +172,7 @@ header {
 
    .step{
      margin: 30px auto 0 auto;
-     /* width must not too narrow, but enough to cause the About Me rendered in 2 lines */
+     /* width must not too narrow, but enough to cause the About Me rendered in 2 lines, depends on what device it is, must scale */
      width: 85%;
      /* border-bottom: 1px solid var(--tertiary-color);  */ /* Dont wanna show border at each step anymore*/
 
@@ -204,7 +204,7 @@ header {
     flex: 2 80%; /* At a 2-to-1 ratio, it will receive two more units of unused space than a sibling with a flex-grow value of 1.*/
     display: flex;
     flex-wrap: wrap;
-     }
+    }
  
     .reachme nav{
       margin: 7px 0 7px 20px;
@@ -227,7 +227,7 @@ header {
 
     .reachme nav a:hover{
       border-top: 4px solid var(--divider-color);
-       
+      border-radius: 3px; 
     }
 
     .reachme nav ul li a{
@@ -236,6 +236,7 @@ header {
       font-size: 26px; /*1.65vw;  */
       margin: 0 40px 0 0;
       border-bottom: 4px solid var(--divider-color);
+      border-radius: 3px;
     }
 
    .reachme p{
@@ -246,9 +247,7 @@ header {
       border-bottom: 4px solid var(--divider-color);
     }
 
-
-
-     /* ||||||||||||||||||||||||||||||||||||End of Reach Me |||||||||||||||||||||||||||||||||||||||||||||||||||*/      
+   /* ||||||||||||||||||||||||||||||||||||End of Reach Me |||||||||||||||||||||||||||||||||||||||||||||||||||*/      
    /* The first project image  */
    .step-img-major{
       flex: 1 67%;
@@ -296,7 +295,8 @@ header {
     .step-text img{
       border: 1px solid rgb(207,169,156);
       max-width: 100%;
-      max-height: 100%;      
+      max-height: 100%;    
+      opacity: 60%;  
     }
 
    .step-text h4 {
@@ -348,9 +348,7 @@ header {
    /* RESUME OR DEDICATED FOOTER JUST IN CASE ------------------------*/
   
    .resume {
-    
      background: var(--secondary-color);
-     
    }
 
    .resume h2 {
