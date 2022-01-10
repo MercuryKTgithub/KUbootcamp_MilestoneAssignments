@@ -146,8 +146,7 @@ section{
   align-items: flex-end; /*in case h3 doesn't get pushed down and there are 2 or more content entities*/
 }
 
-.hero-greeting {
-  /* width: 60%; */
+.hero-greeting {   
   text-align: center;
   margin: 4.0% 0 0 1.5%;
   font-size: 15px;
@@ -251,7 +250,7 @@ flex-wrap: wrap;
 
 /* The first project image area  */
 .step-img-major{
-  flex: 1 67%;
+  flex: 1 67%; /* This percentage ensure the 1st image's width will be render bigger than its siblings that follow */
   margin-right: 20px;
   margin-bottom: 20px;
   /* background-image: url(../images/project_01.jpg); */ /* not using image bg for now*/
@@ -271,7 +270,7 @@ flex-wrap: wrap;
     
 /* The subsequent project images */
 .step-img{
-  flex: 1 33%;
+  flex: 1 33%; /* sibling of this percentage will be render half the size [width] of the 1st image even though when all images can be of the same width */
   margin-right: 20px;
   margin-bottom: 20px;     
 }
