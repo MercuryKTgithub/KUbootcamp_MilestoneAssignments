@@ -2,12 +2,12 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
- }
+}
 
  /* We want the custom properties to be global, meaning that
  any element or class selector can use them, so we use :root pseudo-class */
 
- :root{
+:root{
   --primary-color: #fceed8 ; /* #f7d39e; */  /* #a0cafa; */
   --secondary-color: #af8972; /* ce6f39; a34914 #cc5916 ;*/
   --tertiary-color:  #7a5a47;  /* 5e483b 4b230c; cc5916;  #76a384; #5d7564; #39a6b2; */
@@ -17,593 +17,587 @@
 }
 
 body {
-   color: var(--tertiary-color);
-   font-family: Helvetica, Arial, sans-serif;
-   background-color: var(--primary-color);
+  color: var(--tertiary-color);
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: var(--primary-color);
 }
 
 header {
-    
-   background-size: cover;  /* tells the browser to make sure the image always covers the entire container, image might not be whole*/
-   background-position: center;  /* affect the bg image position*/
-   background-attachment: fixed;  /* places the image relative to the viewport instead of the element. */
-   background-position: 100%; /* percentage shall match with hero section's bg to line them up */
+  background-size: cover;  /* tells the browser to make sure the image always covers the entire container, image might not be whole*/
+  background-position: center;  /* affect the bg image position*/
+  background-attachment: fixed;  /* places the image relative to the viewport instead of the element. */
+  background-position: 100%; /* percentage shall match with hero section's bg to line them up */
 
-   padding: 0 0 15px 0; /*20px 35px;*/
-   background-color: var(--tertiary-color);
-   display: flex;
-   justify-content: space-between;
-   flex-wrap: wrap;
-   /* Add Safari's vendor prefix to the sticky header to make sure it will be supported by Safari*/
-   position: -webkit-sticky;
-   /* Tells the browser to "stick" the element at the very top of the viewport */
-   position: sticky;
-   top: 0; /* 30px; */
-   /* Keep this header element on top of the stack, aka to the front */
-   z-index: 9999;
-   /* To avoid future conflicts although the number seems like overkill */
+  padding: 0 0 15px 0; /*20px 35px;*/
+  background-color: var(--tertiary-color);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  /* Add Safari's vendor prefix to the sticky header to make sure it will be supported by Safari*/
+  position: -webkit-sticky;
+  /* Tells the browser to "stick" the element at the very top of the viewport */
+  position: sticky;
+  top: 0; /* 30px; */
+  /* Keep this header element on top of the stack, aka to the front */
+  z-index: 9999;
+  /* To avoid future conflicts although the number seems like overkill - per lesson note */
 }
 
- header h1 {
-   margin: 0;  
-   font-weight: bold;
-   font-size: 48px;
-   color: var(--tertiary-color);   
-   background-color: var(--primary-color);
-   padding: 6px 20px 0 90px;
-   text-shadow: -2px 2px 1px var(--secondary-color);
- }
+header h1 {
+  margin: 0;  
+  font-weight: bold;
+  font-size: 48px;
+  color: var(--tertiary-color);   
+  background-color: var(--primary-color);
+  padding: 6px 20px 0 90px;
+  text-shadow: -2px 2px 1px var(--secondary-color);
+}
 
- header a {
-   color: var(--primary-color);
-   text-decoration: none;
-   
- }
- header nav {   
-   margin: 20px 0;
- } 
-
- /* li is not address here: */
- header nav ul{
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-between;
-   align-items: center;
-   list-style: none;
-   margin: 0 55px 0 0;
+header a {
+  color: var(--primary-color);
+  text-decoration: none;
   
- }
+}
 
- header nav a {
-   border-bottom: 4px solid rgb(207,169,156); /* borders suggested by mock-up */
-   border-radius: 5px;
- }
+header nav {   
+  margin: 20px 0;
+} 
 
- header nav ul li a{
-   padding: 7px 8px 0 8px; /* tighter navigation menu */
-   font-weight: lighter;
-   /* font-size: 22px; */
-   font-size: 1.65vw; /* the font's size should be roughly 1.55% of the window's overall width*/
-   margin: 0 22px 0 0;
-   
- }
+/* li is not address here: */
+header nav ul{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  margin: 0 55px 0 0;
 
- header nav ul li a:hover {
-   background: var(--primary-color);
-   color: var(--secondary-color);
-   border-radius: 5px;
-   border-top: 4px solid rgb(207,169,156);
-   text-shadow: none;
- }
+}
+
+header nav a {
+  border-bottom: 4px solid rgb(207,169,156); /* borders suggested by mock-up */
+  border-radius: 5px;
+}
+
+header nav ul li a{
+  padding: 7px 8px 0 8px; /* tighter navigation menu */
+  font-weight: lighter;
+  /* font-size: 22px; */
+  font-size: 1.65vw; /* the font's size should be roughly 1.55% of the window's overall width*/
+  margin: 0 22px 0 0;
   
+}
 
- /* Footer starts here |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
- footer {
-   background: var(--primary-color);
-   width: 100%;
-   padding: 30px 35px 15px 35px;
-   /* comment this one when there are 2 or more content entities */
-   /* display: flex;
-   flex-wrap: wrap;
-   justify-content: space-between; */
- }
+header nav ul li a:hover {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  border-radius: 5px;
+  border-top: 4px solid rgb(207,169,156);
+  text-shadow: none;
+}
+  
+/* Footer starts here |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
+footer {
+  background: var(--primary-color);
+  width: 100%;
+  padding: 30px 35px 15px 35px;
+  /* uncomment this snippet when there are 2 or more content entities */
+  /* display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; */
+}
 
- footer h2 {
-   color: var(--secondary-color);
-   font-size: 30px;
-   margin: 0;
- }
+footer h2 {
+  color: var(--secondary-color);
+  font-size: 30px;
+  margin: 0;
+}
 
- /* Copy-right */
- footer div {
-   line-height: 1.1;
-   text-align:center; 
-   font-size: 20px;
- }
+/* Copy-right */
+footer div {
+  line-height: 1.1;
+  text-align:center; 
+  font-size: 20px;
+}
 
- footer a {
-   color: var(--secondary-color);
- }
+footer a {
+  color: var(--secondary-color);
+}
 
 /* End of Footer here ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
 
- section{
-   /* border:dashed 1px;  */
-   /* padding: 50px;  This gives more room to the background image before the hero class content*/
-   padding-top: 55px;
-   padding-bottom: 0;
-   }
+section{
+  /* border:dashed 1px;  */
+  /* padding: 50px;  This gives more room to the background image before the hero class content*/
+  padding-top: 55px;
+  padding-bottom: 0;
+}
 
-   .hero {
-     background-image: url("../images/hero-bg-tulips.jpg");
-     background-size: cover; /* tells the browser to make sure the image always covers the entire container, image might not be whole*/
-     background-position: center; /* affect the bg image position*/    
-     background-attachment: fixed; /* places the image relative to the viewport instead of the element. */
-      /* background-position: 100%; use same percentage to make sure the hero and the header nav pictures line up, hero bg graphics not in use */
-     display: flex;
-     justify-content: right;
-     flex-wrap: wrap;
-     align-items: flex-end; /*in case h3 doesn't get pushed down and there are 2 or more content entities*/
-   }
+.hero {
+  background-image: url("../images/hero-bg-tulips.jpg");
+  background-size: cover; /* tells the browser to make sure the image always covers the entire container, image might not be whole*/
+  background-position: center; /* affect the bg image position*/    
+  background-attachment: fixed; /* places the image relative to the viewport instead of the element. */
+  /* background-position: 100%; use same percentage to make sure the hero and the header nav pictures line up, hero bg graphics not in use */
+  display: flex;
+  justify-content: right;
+  flex-wrap: wrap;
+  align-items: flex-end; /*in case h3 doesn't get pushed down and there are 2 or more content entities*/
+}
 
-   .hero-greeting {
-     /* width: 60%; */
-     text-align: center;
-     margin: 4.0% 0 0 1.5%;
-     font-size: 15px;
-   }
+.hero-greeting {
+  /* width: 60%; */
+  text-align: center;
+  margin: 4.0% 0 0 1.5%;
+  font-size: 15px;
+}
 
-   .hero-greeting h3 {
-     font-style: normal;
-     font-size: 42px;
-     color: var(--secondary-color); 
-     background-color: var(--primary-color);
-     padding:5px 15px;
-     text-shadow: -2px 2px 1px var(--tertiary-color);
-     margin: 30px 80px 30px 0;
-   }
+.hero-greeting h3 {
+  font-style: normal;
+  font-size: 42px;
+  color: var(--secondary-color); 
+  background-color: var(--primary-color);
+  padding:5px 15px;
+  text-shadow: -2px 2px 1px var(--tertiary-color);
+  margin: 30px 80px 30px 0;
+}
 
- /* End of Hero Section*/
+/* End of Hero Section*/
   
-   .steps {    
-     background-color: var(--primary-color);
-     margin:0;
-   }
+.steps {    
+  background-color: var(--primary-color);
+  margin:0;
+}
 
-   .step{
-     margin: 30px auto 0 auto;
-     /* width must not too narrow, but enough to cause the About Me rendered in 2 lines, depends on what device it is, must scale */
-     width: 85%;
-     /* border-bottom: 1px solid var(--tertiary-color);  */ /* Dont wanna show border at each step anymore*/
+.step{
+  margin: 30px auto 0 auto;
+  /* width must not too narrow, but enough to cause the About Me rendered in 2 lines, depends on what device it is, must scale */
+  width: 85%;
+  /* border-bottom: 1px solid var(--tertiary-color);  */ /* Dont wanna show border at each step down anymore*/
 
-     display: flex;
-     flex-wrap: wrap;
-     align-items: center;  /* vertially centered */
-     justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;  /* vertially centered */
+  justify-content: space-between;
 
-     align-items:flex-start;
-   }
+  align-items:flex-start;
+}
 
-   .step h3 {
-      font-family: var(--likable-font-family);
-      color: var(--divider-color); /*inherit; */ /*var(--secondary-color);*/
-      font-size: 46px;
-      flex: 1 15%; /* <flex-grow value> <flex-basis value>; */
-      padding-right: 30px;
-      text-align: right;
-      /* border-right: 8px solid var(--divider-color); */
-      vertical-align: top;
-    }
+.step h3 {
+  font-family: var(--likable-font-family);
+  color: var(--divider-color); /*inherit; */ /*var(--secondary-color);*/
+  font-size: 46px;
+  flex: 1 15%; /* <flex-grow value> <flex-basis value>; */
+  padding-right: 30px;
+  text-align: right;
+  /* border-right: 8px solid var(--divider-color); */
+  vertical-align: top;
+}
 
-   /* flex: <flex-grow value> <flex-shrink value> <flex-basis value>; */
-   /* <flex-grow value> The higher the number, the more unused space that child element will be given.
-      is a numeric value that helps determine how much of the flexbox's unused space can be distributed
-      among its children. This number is used as a ratio,*/
+/* flex: <flex-grow value> <flex-shrink value> <flex-basis value>; */
+/* <flex-grow value> The higher the number, the more unused space that child element will be given.
+  is a numeric value that helps determine how much of the flexbox's unused space can be distributed
+  among its children. This number is used as a ratio,*/
    
-    .step-info{
-    flex: 2 80%; /* At a 2-to-1 ratio, it will receive two more units of unused space than a sibling with a flex-grow value of 1.*/
-    display: flex;
-    flex-wrap: wrap;
-    }
+.step-info{
+flex: 2 80%; /* At a 2-to-1 ratio, it will receive two more units of unused space than a sibling with a flex-grow value of 1.*/
+display: flex;
+flex-wrap: wrap;
+}
  
-    .reachme nav{
-      margin: 7px 0 7px 20px;
-      /* margin-right: 20px; */
-    }
+.reachme nav{
+  margin: 7px 0 7px 20px;
+  /* margin-right: 20px; */
+}
 
-   .reachme nav ul{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      list-style: none;            
-      padding-bottom: 8%;
-    }
+.reachme nav ul{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;            
+  padding-bottom: 8%;
+}
 
-    .reachme nav a{
-      color: var(--tertiary-color);       
-      text-decoration: none;
-    }
+.reachme nav a{
+  color: var(--tertiary-color);       
+  text-decoration: none;
+}
 
-    .reachme nav a:hover{
-      border-top: 4px solid var(--divider-color);
-      border-radius: 3px; 
-    }
+.reachme nav a:hover{
+  border-top: 4px solid var(--divider-color);
+  border-radius: 3px; 
+}
 
-    .reachme nav ul li a{
-      padding: 5px 5px 0 0;  
-      font-weight: lighter;
-      font-size: 26px; /*1.65vw;  */
-      margin: 0 40px 0 0;
-      border-bottom: 4px solid var(--divider-color);
-      border-radius: 3px;
-    }
+.reachme nav ul li a{
+  padding: 5px 5px 0 0;  
+  font-weight: lighter;
+  font-size: 26px; /*1.65vw;  */
+  margin: 0 40px 0 0;
+  border-bottom: 4px solid var(--divider-color);
+  border-radius: 3px;
+}
 
-   .reachme p{
-      padding: 3px 5px 0 0;  
-      font-weight: lighter;
-      font-size: 22px; /*1.65vw; */
-      margin: 0 40px 0 0;
-      border-bottom: 4px solid var(--divider-color);
-    }
+.reachme p{
+  padding: 3px 5px 0 0;  
+  font-weight: lighter;
+  font-size: 22px; /*1.65vw; */
+  margin: 0 40px 0 0;
+  border-bottom: 4px solid var(--divider-color);
+}
 
-   /* ||||||||||||||||||||||||||||||||||||End of Reach Me |||||||||||||||||||||||||||||||||||||||||||||||||||*/      
-   /* The first project image  */
-   .step-img-major{
-      flex: 1 67%;
-      margin-right: 20px;
-      margin-bottom: 20px;
-      /* background-image: url(../images/project_01.jpg); */ /* not using image bg for now*/
-      
-      position: 100%;
-    }
+/* ||||||||||||||||||||||||||||||||||||End of Reach Me |||||||||||||||||||||||||||||||||||||||||||||||||||*/     
 
-    .step-img-major img{
-      margin-right: 0;
-      margin-bottom: 0;      
-      max-width: 100%;
-      max-height:100%;
-      padding: 0;
-      /* images have borther per mock-up */
-      border: 7px solid rgb(207,169,156); 
-    }
+/* The first project image area  */
+.step-img-major{
+  flex: 1 67%;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  /* background-image: url(../images/project_01.jpg); */ /* not using image bg for now*/
+  
+  position: 100%;
+}
+
+.step-img-major img{
+  margin-right: 0;
+  margin-bottom: 0;      
+  max-width: 100%;
+  max-height:100%;
+  padding: 0;
+  /* images have borther per mock-up */
+  border: 7px solid rgb(207,169,156); 
+}
     
-    /* The subsequent project images */
-    .step-img{
-      flex: 1 33%;
-      margin-right: 20px;
-      margin-bottom: 20px;     
-    }
+/* The subsequent project images */
+.step-img{
+  flex: 1 33%;
+  margin-right: 20px;
+  margin-bottom: 20px;     
+}
  
-    .step-img img {
-       max-width: 100%; /* True sizes*/
-       max-height:100%;    
-      /* images have borther per mock-up */
-      border: 7px solid rgb(207,169,156);        
-    }
+.step-img img {
+    max-width: 100%; /* True sizes*/
+    max-height:100%;    
+  /* images have borther per mock-up */
+  border: 7px solid rgb(207,169,156);        
+}
 
-     /* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
 
-    .step-text{
-      display: flex;
-      flex-direction: row;      
-      margin: 15px 5% 5px 5px;
-      border-left: 8px solid var(--divider-color);
-      padding-left: var(--distance-from-divider);
-    }
+/*  flex layout implementation to render About Me content */
+.step-text{
+  display: flex;
+  flex-direction: row;      
+  margin: 15px 5% 5px 5px;
+  border-left: 8px solid var(--divider-color);
+  padding-left: var(--distance-from-divider);
+}
    
-    .step-text img{
-      border: 1px solid rgb(207,169,156);
-      max-width: 100%;
-      max-height: 100%;    
-      opacity: 60%;  
-    }
+.step-text img{
+  border: 1px solid rgb(207,169,156);
+  max-width: 100%;
+  max-height: 100%;    
+  opacity: 60%;  
+}
 
-   .step-text h4 {
-     font-size: 26px;
-     line-height: 1.5;
-     color: var(--secondary-color);
+/* .step-text h4 {
+  font-size: 26px;
+  line-height: 1.5;
+  color: var(--secondary-color);
 
-   }
+}
+.step-text a {
+  font-size: 28px;
+  line-height: 1.5;
+  color: var(--secondary-color);
+} 
 
-   .step-text h2 {
-      font-size: 28px;
-      line-height: 1.5;
-      color: var(--secondary-color);
-    }
+.step-text a:hover {
+  font-size: 28px;
+  line-height: 1.5;
+  color: var(--primary-color);
+}*/
 
-    .step-text a {
-      font-size: 28px;
-      line-height: 1.5;
-      color: var(--secondary-color);
-    }
+.step-text p {
+color: var(--tertiary-color);
+font-size: 18px;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin-left: 30px;
+text-align: justify;
 
-    .step-text a:hover {
-      font-size: 28px;
-      line-height: 1.5;
-      color: var(--primary-color);
-    }
+}
 
-   .step-text p {
-    color: var(--tertiary-color);
+/* child entity of step-info - this additional container ensures all images within  will be rendered at
+   equal distant from the vertial divider per depicted by the mockup otherwise it's a little bit off */
+   
+.gallery{
+  margin: 15px 5% 5px 5px;
+  border-left: 8px solid var(--divider-color);
+  padding-left: var(--distance-from-divider);
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+   
+/* RESUME OR DEDICATED FOOTER JUST IN CASE ---------------------------------------------------------------*/
+  
+.resume {
+  background: var(--secondary-color);
+}
+
+.resume h2 {
+  color: var(--primary-color);
+  /* color: pink; */
+}
+
+/* Represents a CSS rule that sets up a flexbox row. */
+.flex-row {
+  display: flex;
+}
+
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* MEDIA QUERIES STARTS HERE -  max-width approach */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+
+/* Logical operator "and" This media query should apply to screen 
+   media AND only when the width of that screen is less than 980 pixels. */
+
+/* (1) MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER : --------------------------- Pick Ipad of 768 px wide */
+/* BREAK-POINT 980PX HERE ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+@media screen and (max-width: 980px) { 
+  header {
+    padding-bottom: 0;
+    justify-content: center;
+    /* intent to keep the menu stickiness up at stop for smaller desktop-screens to 
+        observe the same behavior seen on big desktop screen, so position: relative is off  */
+    /* position: relative;  to undo the stickiness for smaller screen sizes */
+  }
+
+  header h1 {
+    margin: 20px 25.5% 0 10px;
+    padding: 15px 30px 15px 0;;
+    width: 70%;
+    text-align: center;
+    font-size: 34px;
+  }
+
+  header nav ul {
+    margin-top: 20px;
+    width: 100%;
+    justify-content: center; /* justify-content: space-between; */
+  }
+
+  header nav ul li a {
+    font-size: 28px;
+  }
+
+  .hero-greeting h3 {     
+    font-style: normal;
+    font-size: 32px;   
+    color: var(--secondary-color);  
+    background-color: var(--primary-color);
+    padding: 15px 10px;
+    text-shadow: -1px 1px 1px var(--tertiary-color);
+    margin: 20px 60px 32px 0;
+  }    
+
+  .step-info {
+    flex: 1 100%; /* flex: 2 70%; */
+    text-align: right;
+    justify-content: right;
+
+    padding-right: 0;
+    margin: 0 0 0 0;
+  }
+
+  .step-text{
+    display: flex;
+    flex-direction: row;
+    
+    margin: 15px 5% 5px 5px;
+    border-left: 0 solid var(--divider-color);
+    border-top: 3px solid var(--divider-color);
+    padding-left: var(--distance-from-divider);
+  }
+
+  .step-text p {       
     font-size: 18px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-left: 30px;
-    text-align: justify;
+    margin-left: 20px;
+    text-align: justify;      
     
   }
 
-   /* child entity of step-info - this addtional container ensures all images within  will be rendered at
-      equal distant from the vertial divider per depicted by the mockup otherwise it's a little bit off */
-   .gallery{
-      margin: 15px 5% 5px 5px;
-      border-left: 8px solid var(--divider-color);
-      padding-left: var(--distance-from-divider);
-
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-  }
-   
-   /* RESUME OR DEDICATED FOOTER JUST IN CASE ------------------------*/
-  
-   .resume {
-     background: var(--secondary-color);
-   }
-
-   .resume h2 {
-     color: var(--primary-color);
-     /* color: pink; */
-   }
-
-   /* Represents a CSS rule that sets up a flexbox row. */
-   .flex-row {
-      display: flex;
-   }
-
-   /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-   /* MEDIA QUERIES STARTS HERE -  max-width approach */
-   /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-
-   /* Logical operator "and" This media query should apply to screen 
-      media AND only when the width of that screen is less than 980 pixels. */
-
-   /* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER : ----------------------------pick Ipad of 768 px wide */
-  @media screen and (max-width: 980px) {    
-
-    header {
-      padding-bottom: 0;
-      justify-content: center;
-      /* intent to keep the menu stickiness for smaller desktop-screens to maitain same behavior seen on desktop screen */
-      /* position: relative;  to undo the stickiness for smaller screen sizes - important */
-    }
-
-    header h1 {
-      margin: 20px 25.5% 0 10px;
-      padding: 15px 30px 15px 0;;
-      width: 70%;
-      text-align: center;
-      font-size: 34px;
-    }
-
-    header nav ul {
-      margin-top: 20px;
-      width: 100%;
-      justify-content: center; /* justify-content: space-between; */
-    }
-
-    header nav ul li a {
-      font-size: 28px;
-    }
-
-    .hero-greeting h3 {     
-      font-style: normal;
-      font-size: 32px;   
-      color: var(--secondary-color);  
-      background-color: var(--primary-color);
-      padding: 15px 10px;
-      text-shadow: -1px 1px 1px var(--tertiary-color);
-      margin: 20px 60px 32px 0;
-    }    
-
-    .step-info {
-      flex: 1 100%; /* flex: 2 70%; */
-      text-align: right;
-      justify-content: right;
-  
-      padding-right: 0;
-      margin: 0 0 0 0;
-    }
-
-    .step-text{
-      display: flex;
-      flex-direction: row;
-      
-      margin: 15px 5% 5px 5px;
-      border-left: 0 solid var(--divider-color);
-      border-top: 3px solid var(--divider-color);
-      padding-left: var(--distance-from-divider);
-    }
-
-
-    .step-text p {       
-      font-size: 18px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin-left: 20px;
-      text-align: justify;      
-      
-    }
-
-    .step-text img{
-      border: 1px solid rgb(207,169,156);
-      max-width: 70%;
-      max-height: 60%;
-      margin-top: 5px; /*20px;*/
-      
-    }
-
-    .gallery{
-      margin: 15px 30px 5px 0;
-      border-left:0 solid var(--divider-color); 
-      padding-left: var(--distance-from-divider);       
-      padding-right: 0;
-      border-top: 3px solid var(--divider-color);
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+  .step-text img{
+    border: 1px solid rgb(207,169,156);
+    max-width: 70%;
+    max-height: 60%;
+    margin-top: 5px; /*20px;*/
+    
   }
 
-    .step-img, .step-img-major{
-      margin-top: 20px;
-      margin-bottom: 0;     
-     
-      padding-right: 0;
-    }
+  .gallery{
+    margin: 15px 30px 5px 0;
+    border-left:0 solid var(--divider-color); 
+    padding-left: var(--distance-from-divider);       
+    padding-right: 0;
+    border-top: 3px solid var(--divider-color);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
-    .reachme
-    {
-      padding:  30px 10px 30px 0;
-      margin: 0;
-    }  
-
-    .reachme ul, li, a {
-      line-height: 1.3;
-      font-size: 16px;
-      margin: 0 0 0 5px;
-     }
-
-    .reachme nav ul li a{
-      margin: 0 10px 0 15px ;
-      padding: 12px 0 0 0;         
-      font-size: 16px;        
-      border-bottom: 2px solid var(--divider-color);
-    }
-
-    .reachme p{
-      padding: 4px 0 0 0;     
-      font-size: 16px; /*1.65vw; */
-      margin: 0 5px 0 0;
-      border-bottom: 2px solid var(--divider-color);
-    }
-
-  } /* End of Media Query 980 */
-
-  /* |||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-  /* MEDIA QUERRY FOR 768 BREAKPPOINT -  pick Galaxy Tab S4 of 712 px wide to test */
-  @media screen and (max-width: 768px) {
+  .step-img, .step-img-major{
+    margin-top: 20px;
+    margin-bottom: 0;     
     
-    section {
-      padding: 30px 15px;
-    }
+    padding-right: 0;
+  }
 
-    header h1 {
-      margin: 20px 60px 0 20px;  
-      font-weight: bold;
-      font-size: 34px;
-      color: var(--tertiary-color);   
-      background-color: var(--primary-color);
-      padding: 6px 40px 10px 70px; 
-      text-shadow: -2px 2px 1px var(--secondary-color);
-    }
+  .reachme
+  {
+    padding:  30px 10px 30px 0;
+    margin: 0;
+  }  
 
-    .hero-greeting h3 {     
-      font-style: normal;
-      font-size: 28px;   
-      color: var(--secondary-color);  
-      background-color: var(--primary-color);
-      padding: 10px 10px;
-      text-shadow: -1px 1px 1px var(--tertiary-color);
-      margin: 16px 40px 16px 0;
-    }
+  .reachme ul, li, a {
+    line-height: 1.3;
+    font-size: 16px;
+    margin: 0 0 0 5px;
+  }
 
-    .steps {    
-      background-color: var(--primary-color);
-      margin: 20px;
-    }
+  .reachme nav ul li a{
+    margin: 0 10px 0 15px ;
+    padding: 12px 0 0 0;         
+    font-size: 16px;        
+    border-bottom: 2px solid var(--divider-color);
+  }
 
-    .step {
-      margin: 10px auto 0 auto;
-    }
+  .reachme p{
+    padding: 4px 0 0 0;     
+    font-size: 16px; /*1.65vw; */
+    margin: 0 5px 0 0;
+    border-bottom: 2px solid var(--divider-color);
+  }
 
-    .step h3 {
-      flex: 1 60%; /* flex: 1 30%;*/
-      text-align: center;
-    }
+} /* End of Media Query at BREAK-POINT 980PX -----------------------------------------------------------*/
 
-    .step-info {
-      flex: 1 60%; /* flex: 2 70%; */
-      text-align: center;
-      justify-content: center;
-      margin-top: 10px;
-    }
+  /* |||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+  /* (2) MEDIA QUERRY FOR 768 BREAKPPOINT ------------------- Pick Galaxy Tab S4 of 712 px wide to test */
+@media screen and (max-width: 768px) {    
+  section {
+    padding: 30px 15px;
+  }
+
+  header h1 {
+    margin: 20px 60px 0 20px;  
+    font-weight: bold;
+    font-size: 34px;
+    color: var(--tertiary-color);   
+    background-color: var(--primary-color);
+    padding: 6px 40px 10px 70px; 
+    text-shadow: -2px 2px 1px var(--secondary-color);
+  }
+
+  .hero-greeting h3 {     
+    font-style: normal;
+    font-size: 28px;   
+    color: var(--secondary-color);  
+    background-color: var(--primary-color);
+    padding: 10px 10px;
+    text-shadow: -1px 1px 1px var(--tertiary-color);
+    margin: 16px 40px 16px 0;
+  }
+
+  .steps {    
+    background-color: var(--primary-color);
+    margin: 20px;
+  }
+
+  .step {
+    margin: 10px auto 0 auto;
+  }
+
+  .step h3 {
+    flex: 1 60%;  
+    text-align: center;
+  }
+
+  .step-info {
+    flex: 1 60%;  
+    text-align: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
     
-    .gallery{
-      margin: 30px 30px 5px 0;
-      /* border-left:0 solid var(--divider-color); no longer want to display left vertical border as divider */
-      padding-left: var(--distance-from-divider)/2;       
-      
-    }
+  .gallery{
+    margin: 30px 30px 5px 0;
+    /* border-left:0 solid var(--divider-color); no longer want to display left vertical border for rendering the divider */
+    padding-left: var(--distance-from-divider)/2;  /* the distance from vertical divider is resized to about half of that seen in bigger screen */
+    
+  }
 
-    .step-text{       
-      margin: 15px 5% 5px 5px;
-      border-left: 0 solid var(--divider-color);
-      border-top: 3px solid var(--divider-color);
-      padding-left: var(--distance-from-divider)/2;
-    }
+  .step-text{       
+    margin: 15px 5% 5px 5px;
+    border-left: 0 solid var(--divider-color);
+    border-top: 3px solid var(--divider-color);
+    padding-left: var(--distance-from-divider)/2;
+  }
           
-    .step-text p{
-      padding-left: 0; 
-    }
+  .step-text p{
+    padding-left: 0; 
+  }
 
-    .step-text img{
-      border: 1px solid rgb(207,169,156);
-      max-width: 80%;
-      max-height: 40%;
-      margin-top: 20px;
+  .step-text img{
+    border: 1px solid rgb(207,169,156);
+    max-width: 80%;
+    max-height: 40%;
+    margin-top: 20px;
+  }
+
+   /* For much smaller devices, make left border disappear - personally do not need vertical divider here for readability. Show horizontal border instead */
+  .step-img-major {                
+    border-left: none;
+    /* dont want no border image in the project image gallary */
+    /* border-top: 0 solid var(--divider-color); */ 
+  }
     
-    }
-
-    /* Making left border disappear - you don't need vertical divider here - Show horizontal border instead 
-      to serve as a divider of items displayed along the vertical down the screen */
-    .step-img-major {           
-      border-top: 0 solid var(--divider-color); /* dont want no border image in the project image gallary */
-      border-left: none;
-    }
-    
-    .step-img {           
-     border-top: 0 solid var(--divider-color);
-     border-left: none;
-    }
- 
-    .reachme
-    {
-      padding:  20px 0 0 0 ;
-      margin: 0;
-    }  
-
-    .reachme nav ul li a{
-      padding: 10px 0 0 0;         
-      font-size: 14px;    
-      border-bottom: 2px solid var(--divider-color);
-    }
-
-   .reachme ul, li, a {
-     line-height: 1.1;
-     font-size: 14px;
-    }
-
-    .reachme p{
-      padding: 3px 0 0 0;     
-      font-size: 14px; 
-      margin: 0 5px 0 0;
-      border-bottom: 2px solid var(--divider-color);
-    }
-   
+  .step-img {           
+    border-top: 0 solid var(--divider-color);
+    border-left: none;
   }
  
-  /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-   /* MEDIA QUERY FOR SCREENS LESS THAN 575 pick LG Optimus L70 of 384 px wide */
-  @media screen and (max-width: 575px) {
+  .reachme
+  {
+    padding:  20px 0 0 0 ;
+    margin: 0;
+  }  
+
+  .reachme nav ul li a{
+    padding: 10px 0 0 0;         
+    font-size: 14px;    
+    border-bottom: 2px solid var(--divider-color);
+  }
+
+  .reachme ul, li, a {
+    line-height: 1.1;
+    font-size: 14px;
+  }
+
+  .reachme p{
+    padding: 3px 0 0 0;     
+    font-size: 14px; 
+    margin: 0 5px 0 0;
+    border-bottom: 2px solid var(--divider-color);
+  }
+   
+} /* End of media query for the 768px  BREAKPPOINT */
+ 
+/* |||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* (3) MEDIA QUERY FOR SCREENS LESS THAN 575 ----------------------Pick LG Optimus L70 of 384 px wide */
+@media screen and (max-width: 575px) {
   header{
     position: relative; /* test with LG Optimus - No more sticky header */     
   } 
@@ -653,8 +647,7 @@ header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
+  }
 
   .step h3 {
     font-family: ;
@@ -662,7 +655,6 @@ header {
     font-size: 22px;
     /*flex: 0 12%;  <flex-grow value> <flex-basis value>; */
     padding-right: 0;
-   
     vertical-align: top;
   }
 
@@ -673,7 +665,7 @@ header {
     padding-top: 0;
   }
 
-  /* fo the About Me image and text being display as flex obj*/
+  /* For rendering the About Me image and text, each being displayed as obj inside a flex container */
 
   .step-text{    
     margin: 5px 2.5% 0 0;
@@ -695,67 +687,68 @@ header {
     
   }
     
-    .step-text img{
-      border: 1px solid rgb(207,169,156);
-      max-width: 60%;
-      max-height: 16%;
-      margin-top: 5px;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
+  .step-text img{
+    border: 1px solid rgb(207,169,156);
+    max-width: 60%;
+    max-height: 16%;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 
-    /* For gallary of project images */
+  /* For gallary of project images */
+  /* The first image is the largest per mock-up suggestion, so it is a major image to be displayed foremost */
+  .step-img-major {
+    flex: 0 48%;   
+    border-top: 0 solid var(--divider-color);
+    border-left: none;
+  }
 
-    .step-img-major {
-      flex: 0 48%;   
-      border-top: 0 solid var(--divider-color);
-      border-left: none;
-    }
+  .step-img {
+    flex: 0 48%;      
+    border-top: 0 solid var(--divider-color);
+    border-left: none;
+  }
 
-    .step-img {
-      flex: 0 48%;      
-      border-top: 0 solid var(--divider-color);
-      border-left: none;
-    }
+  /* Takes car of Contact Me */
+  .reachme{
+    margin: 0;
+    padding: 0 ;
+  }
 
-    .reachme{
-      margin: 0;
-      padding: 0 ;
-    }
-
-    .reachme nav{
-      margin: 20px 0 2px 0;
-      padding: 0;
-    }
+  .reachme nav{
+    margin: 20px 0 2px 0;
+    padding: 0;
+  }
 
     
-    .reachme ul, li, a {
-      line-height: 0.8;
-      text-align: center;
-      font-size: 10px;
-    }
-
-    .reachme nav ul li a{
-      padding: 5px 0 0 0;  
-      font-weight: lighter;
-      font-size: 10px;  
-      margin: 0 0 0 0;
-      border-bottom: 3px solid var(--divider-color);
-    }
-
-   .reachme p{
-      padding: 3px 0 0 0;  
-      font-weight: lighter;
-      font-size: 10px; 
-      margin: 0 10px 0 0;
-      border-bottom: 3px solid var(--divider-color);
-    }
-
-    footer div {
-      text-align:center; 
-      font-size: 10px;
-    }
-
+  .reachme ul, li, a {
+    line-height: 0.8;
+    text-align: center;
+    font-size: 10px;
   }
+
+  .reachme nav ul li a{
+    padding: 5px 0 0 0;  
+    font-weight: lighter;
+    font-size: 10px;  
+    margin: 0 0 0 0;
+    border-bottom: 3px solid var(--divider-color);
+  }
+
+  .reachme p{
+    padding: 3px 0 0 0;  
+    font-weight: lighter;
+    font-size: 10px; 
+    margin: 0 10px 0 0;
+    border-bottom: 3px solid var(--divider-color);
+  }
+
+  footer div {
+    text-align:center; 
+    font-size: 10px;
+  }
+
+}
 
 
