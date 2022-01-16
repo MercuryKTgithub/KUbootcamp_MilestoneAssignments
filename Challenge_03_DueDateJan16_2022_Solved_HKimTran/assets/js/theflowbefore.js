@@ -4,14 +4,15 @@ const ONE4YES_TWO4NO = 'Please enter one 1 for YES, 2 for NO';
 const TRYAGAIN = "Please try again!";
 const INVALID_INPUT = 'You either hit Cancel button or you did not enter a valid input.';
 const CANCEL_INCORRECT = 'You either hit Cancel button or you did not pick a valid option.';
-const PW_LENGTH_QUESTION = 'How long would you like your password to be? (Pick a number of characters from 8 to 127)';
-//const LINE_BREAK =  '\r\n\r\n'; // -- for console.log testing only
+const PW_LENGTH_QUESTION = 'How long would you like your password to be? (Pick a number of characters from 8 to 128)';
+const DOUBLE_LINE_BREAK =  '\r\n\r\n'; // -- for console.log testing only
 const LINE_BREAK =  '\r\n';
 const PRINT_YES = "YES";
 const PRINT_NO = "NO";
 const EMPTY_STRING = '';
 
 const OPEN_MSG = "The generated password "
+const NO_PW_MSG = "No Password is Generated";
 
 // Global - to be inspected but not altered:
 const digitZeroToNine = '0123456789';
@@ -32,26 +33,21 @@ var uppercaseLetters = lowercaseLetters.toString().toUpperCase();
 var allIndividualUppercase = [];
 allIndividualUppercase =  uppercaseLetters.split(EMPTY_STRING);
 
-// generateBtn.addEventListener("click", function(){
-//    gatherSpecs();
- 
-//    // do something to global variable
-// });
-
 var getProperLength = function() {
-   var pwlengthPromp = window.prompt(PW_LENGTH_QUESTION);
+   var pwlengthPromp = window.prompt(PW_LENGTH_QUESTION); // Prompt for integer input 
 
    // Dectect (1) no text entered when OK button gets clicked OR (2) -- cancel button gets clicked regardless what entered, results in null case
    // OR (3) -- length is too short as less than 8 characters OR (4) -- length is too long as it is more than 128 characters
-   while ( (pwlengthPromp === this.EMPTY_STRING ) || (pwlengthPromp === null) ||
-           (parseInt(pwlengthPromp) <= PW_LENGTH_MIN) || (parseInt(pwlengthPromp) >= PW_LENGTH_MAX)) {
+   while ( (pwlengthPromp === EMPTY_STRING ) || (pwlengthPromp === null) || (parseInt(pwlengthPromp) < PW_LENGTH_MIN) || (parseInt(pwlengthPromp) > PW_LENGTH_MAX)) {
+      // - not satisfied, keep asking until correct input is received        
       pwlengthPromp = prompt(INVALID_INPUT + LINE_BREAK + TRYAGAIN + LINE_BREAK + PW_LENGTH_QUESTION);
    }
-   passwordSpecs.pwlength = pwlengthPromp;
+   passwordSpecs.pwlength = pwlengthPromp; // record the length number
 };
 
 var confirmLowercase = function() {
-   // -- choose window.prompt over window.confirm because window.confirm presents the default "OK" and "Cancel" where Cancel would cause ambiguity
+   // -- Choose window.prompt over window.confirm because window.confirm presents 
+   // -- the default "OK" and "Cancel" where Cancel would cause ambiguity
    var currentLengthMessage = "You chose password's length to be: " + passwordSpecs.pwlength;
 
    var lowercasePromp = window.prompt(currentLengthMessage + LINE_BREAK + LINE_BREAK
@@ -160,12 +156,12 @@ var confirmSymbolIncluded = function() {
    }
 };
 
-// BEGIN OF VALIDATING FUNCTION OF THE GENERATED PASSWORD
-// Validate password's length is in acceptable range [8, 127] square bracket indicates equal endpoints as well
+// BEGIN OF VALIDATING FUNCTIONS OF THE GENERATED PASSWORD WHICH IS NOT NULL AT THIS POINT
+// Validate password's length is in acceptable range [8, 127] - square bracket indicates endpoint values included as well
 var didLengthMeetRange = function(pw){
    met = false;
    if ((pw.length >= PW_LENGTH_MIN) && (pw.length <= PW_LENGTH_MAX)){
-      console.log(pw.length.toString() + " has correct length");
+      console.log(pw.length.toString() + " is a proper length");
       met=  true;
    }
    console.log(met);
@@ -195,7 +191,6 @@ var existedUppercase = function(pw){
  }
 
  var existedLowercase = function(pw){
-   
    console.log(pw);
    console.log(pw.length);
    var found = false;
@@ -269,133 +264,142 @@ var gatherSpecs = function(){
 
 // Break-down given specs and iamplement the password creation accordingly
 var implementSpecs = function(){
-   let wishlistPassword = EMPTY_STRING;
+
    let validChars = EMPTY_STRING;
-   var generatedPassword = EMPTY_STRING;
+   let generatedPassword = EMPTY_STRING;
 
-   // // let wishlistHasLowercase = passwordSpecs.lowercase;
-   // // let wishlistHasUppercase = passwordSpecs.uppercase;
-   // // let wishlistHasNumber = passwordSpecs.numeric;
-   // // let wishlistHasSpecialChar = passwordSpecs.symbolincluded;
-
-   // Quick test only
-   let wishlistHasLowercase = true;
-   let wishlistHasUppercase = true;
-   let wishlistHasNumber = true;
-   let wishlistHasSpecialChar = true;
-   validChars = lowercaseLetters + uppercaseLetters + digitZeroToNine + allSymbols
-
-// //    if (wishlistHasLowercase) {
-// //       validChars += lowercaseLetters;
-// //    }
-// // 
-// //    if (wishlistHasUppercase) {
-// //       validChars += lowercaseLetters.toUpperCase();
-// //    }
-// // 
-// //    if (wishlistHasNumber) {
-// //       validChars += digitZeroToNine;
-// //    }
-// // 
-// //    if (wishlistHasSpecialChar) {
-// //       validChars += allSymbols;
-// //    }
-// // 
-// //    let generatedPassword = '';
-// //    console.log(validChars);
-
-   // -- too long or too short
-   //generatedPassword = 'LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJLPXKPJ98765LPXKPJ987659876598765' ;
-   //generatedPassword = '12345XY'; // too short
-
-   // -- boundary values 128 and  8
-   //generatedPassword = '128A0KPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJ98765LPXKPJLPXKPJ98765LPXKPJ987659876598765' ;
-   //generatedPassword = '8XYXYXY0';
-
-   // Randomly generated whole number value = Math.floor(Math.random() * (max - min + 1) + min);
-   // Evaluate (max - min + 1) + min) :
-   // min = 0 (index 0 to get the 1st letter in the array)
-   // max = how many letters there are in the available valid character set - 1 (because we're looking at indexes) that is:
-   // max = array.length - 1
-   // Now (max - min + 1) + min = ((array.length - 1) - 0 + 1) + 0  =  array.length
-   // Thus value = Math.floor(Math.random() * array.length;
-
-   // // for (let i = 0; i < parseInt(passwordSpecs.pwlength); i++) {
-   // //    const index = Math.floor(Math.random() * validChars.length); // pick randomly a number as index from 0 to upperbound - 1 as Math.random() returns a random decimal number between 0 and 1 so we would never get exactly the upperbound
-   // //    wishlistPassword += validChars[index]; // extract the letter per index position and append it to var generatedPassword in each iteration
-   // // }
-
-   // Test only
-   for (let i = 0; i < 22; i++) {
-      const index = Math.floor(Math.random() * validChars.length); // pick randomly a number as index from 0 to upperbound - 1 as Math.random() returns a random decimal number between 0 and 1 so we would never get exactly the upperbound
-      generatedPassword += validChars[index]; // extract the letter per index position and append it to var generatedPassword in each iteration
-   }
-// // 
-   //console.log(wishlistPassword);
-
-   //// -- random  testing
-   //generatedPassword = ">6w;+`.+t8+:je$o,-=p3";
-   //generatedPassword = ">6w;.+t8-=p3";
-
-   //generatedPassword = wishlistPassword; // may not needed
    pwResult.textContent = EMPTY_STRING;
    valPanel.textContent = EMPTY_STRING;
 
-   // Validate the generated password against specs to ensure proper desired length:
+   let wishlistHasLowercase = passwordSpecs.lowercase;
+   let wishlistHasUppercase = passwordSpecs.uppercase;
+   let wishlistHasNumber = passwordSpecs.numeric;
+   let wishlistHasSpecialChar = passwordSpecs.symbolincluded;
 
-   if (didLengthMeetRange(generatedPassword)){
-      valPanel.textContent =  OPEN_MSG + generatedPassword + " has " + generatedPassword.length.toString() + " characters within range [8,128]" + LINE_BREAK; 
-    } else {
-      valPanel.textContent =  OPEN_MSG + generatedPassword + " is too short or too long" + LINE_BREAK; 
-    }
+   // // Hardcoded value for quick test only
+   // let wishlistHasLowercase = true;
+   // let wishlistHasUppercase = true;
+   // let wishlistHasNumber = true;
+   // let wishlistHasSpecialChar = true;
+   // validChars = lowercaseLetters + uppercaseLetters + digitZeroToNine + allSymbols
 
-   // Validate the generated password against specs to make sure it indeed has at least one letter that satisfies the desired character type:
-
+   // Determine which character-type is included from which the password will be generated.
    if (wishlistHasLowercase) {
-      var found = existedLowercase(generatedPassword);
-      console.log("found-lowercase value is: " + found);
-      if (found)
-      {
-         valPanel.textContent += OPEN_MSG + generatedPassword + " reflects lowercase" + LINE_BREAK;
-      } else {
-         valPanel.textContent +=  OPEN_MSG + generatedPassword + " does not reflect lowercase" + LINE_BREAK;
-      }
+      validChars += lowercaseLetters;
    }
 
-   if(wishlistHasUppercase){
-      var found = existedUppercase(generatedPassword);
-      console.log("found-uppercase value is: " + found);
-      if (found)
-      {
-         valPanel.textContent += OPEN_MSG + generatedPassword + " reflects uppercase" + LINE_BREAK;
-      } 
-      else {
-         valPanel.textContent += OPEN_MSG + generatedPassword + " does not reflect uppercase" + LINE_BREAK;
-      }
+   if (wishlistHasUppercase) {
+      validChars += lowercaseLetters.toUpperCase();
    }
 
    if (wishlistHasNumber) {
-      if (hasNumericCharacter(generatedPassword)){
-         valPanel.textContent += OPEN_MSG + generatedPassword + " reflects numeric letter" + LINE_BREAK;
+      validChars += digitZeroToNine;
+   }
+
+   if (wishlistHasSpecialChar) {
+      validChars += allSymbols;
+   }
+   
+   console.log(validChars);
+
+   // -- When the client says NO to all the criteria questions,
+   // -- no password should be generated (per TA) and print this message as the result
+   if((!wishlistHasLowercase) && (!wishlistHasUppercase) && (!wishlistHasNumber) && (!wishlistHasSpecialChar))
+   {
+      generatedPassword = NO_PW_MSG;
+      valPanel.style.textAlign = "center";
+      valPanel.style.display = "block";
+      valPanel.textContent = NO_PW_MSG + " as You Answered NO to All The Character-type Criteria Questions"; 
+   }
+   
+   // -- When the client says YES to at least 1 criteria question,
+   // -- generate the passwordand & check whether generated pw length is proper  
+   if(wishlistHasLowercase || wishlistHasUppercase || wishlistHasNumber || wishlistHasSpecialChar)
+   {
+      
+      for (let i = 0; i < parseInt(passwordSpecs.pwlength); i++) 
+      {
+         const index = Math.floor(Math.random() * validChars.length); // pick randomly a number as index from 0 to upperbound - 1 
+         generatedPassword += validChars[index]; // extract the letter per index position and append it to var generatedPassword in each iteration
+      }
+
+      // // Generate the pw of length 33 hardcoded - testing only
+      // for (let i = 0; i < 128; i++) 
+      // {
+      //    const index = Math.floor(Math.random() * validChars.length); 
+      //    generatedPassword += validChars[index];          
+      // }
+
+      if (didLengthMeetRange(generatedPassword))
+      {
+            valPanel.style.textAlign = "left";
+            valPanel.style.display = "block";
+            valPanel.textContent =  OPEN_MSG + generatedPassword + " has " + generatedPassword.length.toString() + " characters within range [8,128]." + LINE_BREAK; 
+      }
+        
+   }
+   
+   // -- Validate the generated password against active specs (to which the client says YES)   
+   // -- to make sure it indeed has at least one letter that satisfies the desired character type:
+
+   if (wishlistHasLowercase) 
+   {
+      var found = existedLowercase(generatedPassword);
+      console.log("found-lowercase value is: " + found);
+      valPanel.style.textAlign = "left";
+      valPanel.style.display = "block";
+      if (found)
+      {
+         valPanel.textContent += OPEN_MSG + generatedPassword + " reflects lowercase letter(s)." + LINE_BREAK;
       } else {
-         valPanel.textContent += OPEN_MSG + generatedPassword + " does not reflect numeric letter" + LINE_BREAK;
+         valPanel.textContent +=  OPEN_MSG + generatedPassword + " does not reflect lowercase letter(s)." + LINE_BREAK;
       }
    }
 
-   if(wishlistHasSpecialChar){
-      // PRINT TEST ONLY
-      if(detecteCharSpecial(generatedPassword)){
-         valPanel.textContent += OPEN_MSG + generatedPassword + " reflects special character"+ LINE_BREAK;  
+   if(wishlistHasUppercase)
+   {
+      var found = existedUppercase(generatedPassword);
+      console.log("found-uppercase value is: " + found);
+      valPanel.style.textAlign = "left";
+      valPanel.style.display = "block";
+      if (found)
+      {
+         valPanel.textContent += OPEN_MSG + generatedPassword + " reflects uppercase letter(s)." + LINE_BREAK;
+      } 
+      else 
+      {
+         valPanel.textContent += OPEN_MSG + generatedPassword + " does not reflect uppercase letter(s)." + LINE_BREAK;
+      }
+   }
+
+   if (wishlistHasNumber) 
+   {
+      valPanel.style.textAlign = "left";
+      valPanel.style.display = "block";
+      if (hasNumericCharacter(generatedPassword))
+      {
+         valPanel.textContent += OPEN_MSG + generatedPassword + " reflects numeric character(s)." + LINE_BREAK;
       } else {
-         valPanel.textContent += OPEN_MSG + generatedPassword + " does not reflect special characters"+ LINE_BREAK;  
+         valPanel.textContent += OPEN_MSG + generatedPassword + " does not reflect numeric character(s)." + LINE_BREAK;
+      }
+   }
+
+   if(wishlistHasSpecialChar)
+   {
+      // PRINT TEST ONLY
+      valPanel.style.textAlign = "left";
+      valPanel.style.display = "block";
+      if(detecteCharSpecial(generatedPassword)){
+         valPanel.textContent += OPEN_MSG + generatedPassword + " reflects special character(s)."+ LINE_BREAK;  
+      } else {
+         valPanel.textContent += OPEN_MSG + generatedPassword + " does not reflect special character(s)."+ LINE_BREAK;  
       }
    }
 
    pwResult.textContent = generatedPassword; // print final result
+};
 
-}
-
-// Object passwordSpecs encapsulates all password requirement specifications - do passwordSpecs.reset(); to reset properties and values
+// Object passwordSpecs encapsulates all password requirement specifications 
 var passwordSpecs = {
    // treat pw length as string for now
    pwlength: EMPTY_STRING,
@@ -403,7 +407,7 @@ var passwordSpecs = {
    uppercase: false,
    numeric: false,
    symbolincluded: false,
-   reset: function() {
+   reset: function() { // just in case
       this.pwlength = EMPTY_STRING;
       this.lowercase = false;
       this.uppercase = false;
@@ -420,9 +424,7 @@ var passwordSpecs = {
 
  };
 
- //gatherSpecs(); // will be called inside button click event
- generateBtn.addEventListener("click", function(){   
-   //gatherSpecs();
+generateBtn.addEventListener("click", function(){   
+   gatherSpecs();
    implementSpecs();
-    
 });
