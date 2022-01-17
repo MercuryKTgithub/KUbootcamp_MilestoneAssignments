@@ -12,7 +12,7 @@ const PRINT_NO = "NO";
 const EMPTY_STRING = '';
 
 const OPEN_MSG = "The generated password "
-const NO_PW_MSG = "No Password is Generated";
+const NO_PW_MSG = "No Password is Generated"; // when reply NO to all questions per TA suggestion
 
 // Global - to be inspected but not altered:
 const digitZeroToNine = '0123456789';
@@ -27,19 +27,30 @@ var generateBtn = document.getElementById("generate");
 
 var allSymbols = symbolFineByItSelf + symbolNeedsEscapeChar;
 var allIndividualSymbols = [];
-allIndividualSymbols =  allSymbols.split(EMPTY_STRING);
+// Transverse thru this array of special characters to assist with pw validation, to avoid additional checking if a char is numeric
+allIndividualSymbols =  allSymbols.split(EMPTY_STRING); 
 
 var uppercaseLetters = lowercaseLetters.toString().toUpperCase();
 var allIndividualUppercase = [];
+// Transverse thru this array of uppercase character to assist with pw validation, to avoid additional checking if a char is special character
 allIndividualUppercase =  uppercaseLetters.split(EMPTY_STRING);
 
+// Randomly generated whole number value in some range = Math.floor(Math.random() * (max - min + 1) + min);
+// Evaluate (max - min + 1) + min) :
+// min = 0 (index 0 to get the 1st letter in the array)
+// max = how many letters are there in the available valid character set - 1 (because we're looking at indexes) that is:
+// max = array.length - 1
+// Now (max - min + 1) + min = ((array.length - 1) - 0 + 1) + 0  =  array.length
+// Thus value = Math.floor(Math.random() * array.length;
+
+// Function Declarations:
 function generatePassword(length, charactersets){
   let wishlistPw = EMPTY_STRING;
   console.log(charactersets);
   for (let j = 0; j < length; j++) 
   {
      const index = Math.floor(Math.random() * charactersets.length); // pick randomly a number as index from 0 to upperbound - 1 
-     wishlistPw += charactersets[index]; // extract the letter per index position and append it to var generatedPassword in each iteration
+     wishlistPw += charactersets[index]; // extract the letter given the index position and append it to var generatedPassword in each iteration
   }
   return wishlistPw;
 }
@@ -55,6 +66,14 @@ function printSupplementaryInfoCentered(){
   valPanel.style.display = "block";
 }
 
+ function isNumeric(letter){
+   // -- javascript method isNaN() returns true if a value is  
+   // -- Not-a-Number so we would want to return the opposite
+   return !isNaN(letter) 
+ }
+// End of Function Declarations
+
+// Function Expressions:
 // Taking care of the promp interactions with end-user and sanitize input data
 var getProperLength = function() {
    var pwlengthPromp = window.prompt(PW_LENGTH_QUESTION); // Prompt for integer input 
@@ -91,13 +110,14 @@ var confirmLowercase = function() {
       window.alert(CANCEL_INCORRECT + LINE_BREAK + TRYAGAIN);
        confirmLowercase(); // recursive call - keep asking until proper input is received
        break;
+
    } // END OF switch
 }; // END OF FUNCTION confirmLowercase
 
 var confirmUppercase = function() {
-  // Short summary
+   // Short summary
    var currentLengthMessage = "You chose password's length to be: " + (PasswordText.pwlength);
-   var currentLowercase = (PasswordText.lowercase)? PRINT_YES : PRINT_NO; // Conditional ternary operator
+   var currentLowercase = (PasswordText.lowercase)? PRINT_YES : PRINT_NO; // conditional ternary operator
    var currentLowercaseMessage = "Your response to include lowercase in your pasword is: " + currentLowercase;
    // Prompt question
    var uppercasePromp = window.prompt(currentLengthMessage + LINE_BREAK + currentLowercaseMessage + LINE_BREAK + LINE_BREAK
@@ -121,7 +141,7 @@ var confirmNumeric = function() {
   // Short summary
    var currentLengthMessage = "You chose password's length to be: " + PasswordText.pwlength;
 
-   var currentLowercase = (PasswordText.lowercase)? PRINT_YES : PRINT_NO;
+   var currentLowercase = (PasswordText.lowercase)? PRINT_YES : PRINT_NO; // conditional ternary operator
    var currentLowercaseMessage = "Your response to include lowercase in your pasword is: " + currentLowercase;
 
    var currentUppercase = PasswordText.uppercase? PRINT_YES : PRINT_NO;
@@ -132,49 +152,52 @@ var confirmNumeric = function() {
                       + LINE_BREAK + "Would you like numeric characters in your password? " + ONE4YES_TWO4NO);
    numericPromp = parseInt(numericPromp);
    switch (numericPromp) {
-     case 1:
-      PasswordText.numeric = true;
-      break;
-     case 2:
-      PasswordText.numeric = false;
-      break;
-     default:
-       window.alert(CANCEL_INCORRECT + LINE_BREAK + TRYAGAIN);
-       confirmNumeric();
-       break;
+      case 1:
+         PasswordText.numeric = true;
+         break;
+      case 2:
+         PasswordText.numeric = false;
+         break;
+      default:
+         window.alert(CANCEL_INCORRECT + LINE_BREAK + TRYAGAIN);
+         confirmNumeric();
+         break;
    }
 };
 
 var confirmSymbolIncluded = function() {
-  // Short summary
+   // Short summary
    var currentLengthMessage = "You chose password's length to be: " + PasswordText.pwlength;
    var currentLowercase = (PasswordText.lowercase)? PRINT_YES : PRINT_NO;
+
    var currentLowercaseMessage = "Your response to include lowercase in your pasword is: " + currentLowercase;
    var currentUppercase = PasswordText.uppercase? PRINT_YES : PRINT_NO;
+
    var currentUppercaseMessage = "Your response to include uppercase in your pasword is: " + currentUppercase;
    var currentNumeric = PasswordText.numeric? PRINT_YES : PRINT_NO;
+
    var currentNumericMessage = "Your response to include numeric characters in your pasword is: " + currentNumeric;
    var currentSummary = currentLengthMessage + LINE_BREAK + currentLowercaseMessage  + LINE_BREAK
                         + currentUppercaseMessage + LINE_BREAK + currentNumericMessage + LINE_BREAK
-  // Prompt question
+   // Prompt question
    var symbolicPromp = window.prompt(currentSummary + LINE_BREAK + "Would you like special characters in your password? " + ONE4YES_TWO4NO);
    
    symbolicPromp = parseInt(symbolicPromp);
    switch (symbolicPromp) {
-     case 1:
-      PasswordText.symbolincluded = true;
-      var currentSymbolicMessage = "Your response to include special characters in your pasword is: " + PRINT_YES + LINE_BREAK;
-      window.alert(currentSummary + currentSymbolicMessage);
-      break;
-     case 2:
-      PasswordText.symbolincluded = false;
-      var currentSymbolicMessage = "Your response to include special characters in your pasword is: " + PRINT_NO + LINE_BREAK;
-      window.alert(currentSummary + currentSymbolicMessage);
-      break;
-     default:
-       window.alert(CANCEL_INCORRECT + LINE_BREAK + TRYAGAIN);
-       confirmSymbolIncluded();
-       break;
+      case 1:
+         PasswordText.symbolincluded = true;
+         var currentSymbolicMessage = "Your response to include special characters in your pasword is: " + PRINT_YES + LINE_BREAK;
+         window.alert(currentSummary + currentSymbolicMessage);
+         break;
+      case 2:
+         PasswordText.symbolincluded = false;
+         var currentSymbolicMessage = "Your response to include special characters in your pasword is: " + PRINT_NO + LINE_BREAK;
+         window.alert(currentSummary + currentSymbolicMessage);
+         break;
+      default:
+         window.alert(CANCEL_INCORRECT + LINE_BREAK + TRYAGAIN);
+         confirmSymbolIncluded();
+         break;
    }
 };
 
@@ -191,11 +214,7 @@ var didLengthMeetRange = function(pw){
    return met;
  }
 
- // >6w;+`.+t8+:je$o,-=p3 
- //  ">6w;H.+t8-=p3";
 var existedUppercase = function(pw){
-   console.log(pw);
-   console.log(pw.length);
    var found = false;
    for(var j = 0; j < allIndividualUppercase.length; j++)
    { 
@@ -209,13 +228,11 @@ var existedUppercase = function(pw){
          }
       }
    }
-   console.log(found);
+   //console.log(found);
    return found;
  }
 
  var existedLowercase = function(pw){
-   console.log(pw);
-   console.log(pw.length);
    var found = false;
    for(var j = 0; j < lowercaseLetters.length; j++)
    { 
@@ -245,11 +262,6 @@ var existedUppercase = function(pw){
    }
  }
 
- // javascript method isNaN()  returns true if a value is Not-a-Number so want to return the opposite
- function isNumeric(letter){
-   return !isNaN(letter)
- }
-
  var detecteCharSpecial = function(pw){
    // console.log(allIndividualSymbols);
    existedSymbol = false;
@@ -267,6 +279,7 @@ var existedUppercase = function(pw){
    return existedSymbol;
 } 
 // END OF PASSWORD VALIDATING FUNCTIONS
+// End of Function Expressions
 
 // Gather client responses and feed them into object PasswordText that can be accessed later for implementation
 var gatherSpecs = function(){
@@ -323,8 +336,6 @@ var implementSpecs = function(){
    if((!wishlistHasLowercase) && (!wishlistHasUppercase) && (!wishlistHasNumber) && (!wishlistHasSpecialChar))
    {
       generatedPassword = NO_PW_MSG;
-      // valPanel.style.textAlign = "center";
-      // valPanel.style.display = "block";
       printSupplementaryInfoCentered();
       valPanel.textContent = NO_PW_MSG + " as You Answered NO to All The Character-type Criteria Questions"; 
    }
@@ -336,7 +347,7 @@ var implementSpecs = function(){
       // -- make a call the function that generates the random password
       generatedPassword = generatePassword(parseInt(PasswordText.pwlength), validChars);
 
-      // // Generate the pw of length 33 hardcoded - testing only
+      // // Generate the pw of length 33 hardcoded - testing onl
       // for (let i = 0; i < 128; i++) 
       // {
       //    const index = Math.floor(Math.random() * validChars.length); 
@@ -345,23 +356,18 @@ var implementSpecs = function(){
 
       if (didLengthMeetRange(generatedPassword))
       {
-            // valPanel.style.textAlign = "left";
-            // valPanel.style.display = "block";
             printSupplementaryInfoLeft();
             valPanel.textContent =  OPEN_MSG + generatedPassword + " has " + generatedPassword.length.toString() + " characters in range of [8, 128]." + LINE_BREAK; 
       }
-        
    }
    
-   // -- Validate the generated password against active specs (to which the client says YES)   
+   // -- Only validate the generated password against active specs (to which the client says YES)   
    // -- to make sure it indeed has at least one letter that satisfies the desired character type:
 
    if (wishlistHasLowercase) 
    {
       var found = existedLowercase(generatedPassword);
       //console.log("found-lowercase value is: " + found);
-      // valPanel.style.textAlign = "left";
-      // valPanel.style.display = "block";
       printSupplementaryInfoLeft();
       if (found)
       {
@@ -400,8 +406,7 @@ var implementSpecs = function(){
    if(wishlistHasSpecialChar)
    {
       printSupplementaryInfoLeft();
-      // valPanel.style.textAlign = "left";
-      // valPanel.style.display = "block";
+    
       if(detecteCharSpecial(generatedPassword)){
          valPanel.textContent += OPEN_MSG + generatedPassword + " reflects special character(s)."+ LINE_BREAK;  
       } else {
@@ -412,9 +417,9 @@ var implementSpecs = function(){
    passwordText.textContent = generatedPassword; // print final result
 };
 
-// Object PasswordText encapsulates all password requirement specifications 
+// Object PasswordText encapsulates all password requirement specifications from client
 var PasswordText = {
-   // treat pw length as string for now
+   // -- treat pw length as string for now
    pwlength: EMPTY_STRING,
    lowercase: false,
    uppercase: false,
@@ -430,6 +435,7 @@ var PasswordText = {
    
  };
 
+// Actions - Things happen when client clicks the Generate Password button
 generateBtn.addEventListener("click", function(){   
    gatherSpecs();
    implementSpecs();
