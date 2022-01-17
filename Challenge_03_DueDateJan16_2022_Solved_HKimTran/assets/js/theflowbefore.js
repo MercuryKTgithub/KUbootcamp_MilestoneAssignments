@@ -22,7 +22,7 @@ const symbolFineByItSelf = "~!@#$%^&*()_+`-={|}[]:;<>?,./";
 const symbolNeedsEscapeChar = "\"\'\\" ;   
 
 var valPanel = document.getElementById("validation");
-var pwResult = document.getElementById("password");
+var passwordText = document.getElementById("password");
 var generateBtn = document.getElementById("generate");
 
 var allSymbols = symbolFineByItSelf + symbolNeedsEscapeChar;
@@ -254,7 +254,7 @@ var gatherSpecs = function(){
    confirmSymbolIncluded();
 
    // // PRINT TEST ONLY
-   // pwResult.textContent = "You want: your pw lowercase to be: " + passwordSpecs.lowercase  + LINE_BREAK
+   // passwordText.textContent = "You want: your pw lowercase to be: " + passwordSpecs.lowercase  + LINE_BREAK
    //                       + " and uppercase to be: " + passwordSpecs.uppercase + LINE_BREAK
    //                       + " and numeric to be: " + passwordSpecs.numeric + LINE_BREAK
    //                       + " and symbol-included to be: " + passwordSpecs.symbolic + LINE_BREAK + LINE_BREAK
@@ -268,7 +268,7 @@ var implementSpecs = function(){
    let validChars = EMPTY_STRING;
    let generatedPassword = EMPTY_STRING;
 
-   pwResult.textContent = EMPTY_STRING;
+   passwordText.textContent = EMPTY_STRING;
    valPanel.textContent = EMPTY_STRING;
 
    let wishlistHasLowercase = passwordSpecs.lowercase;
@@ -396,7 +396,7 @@ var implementSpecs = function(){
       }
    }
 
-   pwResult.textContent = generatedPassword; // print final result
+   passwordText.textContent = generatedPassword; // print final result
 };
 
 // Object passwordSpecs encapsulates all password requirement specifications 

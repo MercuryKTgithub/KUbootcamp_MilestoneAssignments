@@ -134,7 +134,7 @@ button[disabled] {
   text-align: left;
   margin-top: 10px;
   margin-bottom: 10px;
-  border: 0 dashed #c0c7cf;
+  border: 1px dashed #c0c7cf;
   border-radius: 3px;
   resize: none;
   overflow: hidden;
