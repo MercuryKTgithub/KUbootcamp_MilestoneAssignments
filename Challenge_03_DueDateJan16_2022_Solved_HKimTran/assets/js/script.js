@@ -46,7 +46,7 @@ allIndividualUppercase =  uppercaseLetters.split(EMPTY_STRING);
 // Function Declarations:
 function generatePassword(length, charactersets){
   let wishlistPw = EMPTY_STRING;
-  console.log(charactersets);
+  //console.log(charactersets);
   for (let j = 0; j < length; j++) 
   {
      const index = Math.floor(Math.random() * charactersets.length); // pick randomly a number as index from 0 to upperbound - 1 
@@ -79,8 +79,9 @@ var getProperLength = function() {
    var pwlengthPromp = window.prompt(PW_LENGTH_QUESTION); // Prompt for integer input 
 
    // Dectect (1) no text entered when OK button gets clicked OR (2) -- cancel button gets clicked regardless what entered, results in null case
-   // OR (3) -- length is too short as less than 8 characters OR (4) -- length is too long as it is more than 128 characters
-   while ( (pwlengthPromp === EMPTY_STRING ) || (pwlengthPromp === null) || (parseInt(pwlengthPromp) < PW_LENGTH_MIN) || (parseInt(pwlengthPromp) > PW_LENGTH_MAX)) {
+   // OR (3) -- length is too short as less than 8 characters OR (4) -- length is too long as it is more than 128 characters OR (5) Not-a-Number
+   while ( (pwlengthPromp === EMPTY_STRING ) || (pwlengthPromp === null) 
+   || (parseInt(pwlengthPromp) < PW_LENGTH_MIN) || (parseInt(pwlengthPromp) > PW_LENGTH_MAX) || (!isNumeric(pwlengthPromp))) {
       // - not satisfied, keep asking until correct input is received        
       pwlengthPromp = prompt(INVALID_INPUT + LINE_BREAK + TRYAGAIN + LINE_BREAK + PW_LENGTH_QUESTION);
    }
@@ -210,7 +211,7 @@ var didLengthMeetRange = function(pw){
       console.log(pw.length.toString() + " is a proper length");
       met=  true;
    }
-   console.log(met);
+   //console.log(met);
    return met;
  }
 
@@ -246,7 +247,7 @@ var existedUppercase = function(pw){
          }
       }
    }
-   console.log(found);
+   //console.log(found);
    return found;
  }
 
