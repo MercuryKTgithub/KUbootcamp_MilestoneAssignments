@@ -13,7 +13,7 @@
   --tertiary-color:  #7a5a47;  /* 5e483b 4b230c; cc5916;  #76a384; #5d7564; #39a6b2; */
   --divider-color: rgb(154, 94, 56);
   --distance-from-divider: 60px;
-  --likable-font-family: "Microsoft YaHei New", "Microsoft Yahei" ;
+  --likable-font-family: Helvetica, Arial, sans-serif; /* "Microsoft YaHei New", "Microsoft Yahei" ; */
 }
 
 body {

@@ -9,8 +9,8 @@
 // };
 //var gameDigitTimerPrint = document.getElementById("digit-timer")
 var btnStartGame = document.getElementById("start-the-quiz");
-var globalCounter = 3;
-const SPACE = ' '
+var globalCounter = 12;
+const SPACE = ' ';
 var countDownTimer = function(){
 
    var gameDigitTimerPrint = document.getElementById("digit-timer")
@@ -47,7 +47,7 @@ var countDownTimer = function(){
 
 var startCountdown;
 var startQuizTimer = function(){
-   startCountdown = setInterval(countDownTimer, 1000); // 500 indicates how fast the counting is
+   startCountdown = setInterval(countDownTimer, 500); // 500 indicates how fast the counting is
 };
 
 btnStartGame.addEventListener("click", function(){
