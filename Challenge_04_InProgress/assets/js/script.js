@@ -1,6 +1,3 @@
-var btnStartGame = document.getElementById("start-the-quiz");
-var globalCounter = 26;
-
 const CHOICE_SML_LEN = 20;
 const CHOICE_WIDTH_PASS_SML_LEN = "35%";
 const CHOICE_WIDTH_MIDLEN = 40;
@@ -16,9 +13,14 @@ const SCORE_REPORT_LINE = "Your final score is: ";
 const INITIALS_INVITE = "Enter initials: ";
 const SUBMIT_BTN_FACE = "Submit";
 const PREFIX_TIMESTAMP = "Time: ";
+const ZERO = -1;
 
 const FALSE = 'false';
 const TRUE = 'true';
+
+var btnStartGame = document.getElementById("start-the-quiz");
+var globalCounter = 65; // how many seconds there are
+var globalJumpedOffSlideId = STRING_EMPTY;
 
 var currentHighScore = 0;
 var startCountdown;
@@ -34,16 +36,17 @@ var introCard = document.getElementById("quiz-intro");
 
 var dynamicQuestionSet = document.getElementById("dynamic_question_set"); // div
 var answerStatus = document.getElementById("quiz_answer_response"); // h4
+var gameDigitTimerPrint = null;
 
 var countDownTimer = function(){
-   var gameDigitTimerPrint = document.getElementById("digit-timer") // not a global var
+     gameDigitTimerPrint = document.getElementById("digit-timer") // not a global var
    //globalCounter = 20;
    console.log(globalCounter); // important
    if(globalCounter.toString().length < 2)
    {
       gameDigitTimerPrint.style.marginLeft = "68%";
       gameDigitTimerPrint.style.marginRight = "0";
-      gameDigitTimerPrint.textContent = PREFIX_TIMESTAMP + SPACE + globalCounter;
+      gameDigitTimerPrint.textContent = PREFIX_TIMESTAMP + SPACE + globalCounter; // add prefix Time: 
 
    }
    else{
@@ -51,12 +54,12 @@ var countDownTimer = function(){
    }
    
    globalCounter--;
-   if(globalCounter === 0)
+   if(globalCounter == ZERO)
    {
-      console.log("All done");
+      console.log("Time has reached zero. Print inside countDownTimer()");
       clearInterval(startCountdown); 
       globalCounter = 0;
-      gameDigitTimerPrint.disabled = true;
+      gameDigitTimerPrint.disabled = true; //disable the clock when 0
    }
 };
 // -- function countdown is passed in as 1st parameter of the framework setInterval funcion
@@ -86,11 +89,11 @@ function quizAnsRespond(status){
    if (status === TRUE)
    {
       answerStatus.textContent = ANS_RIGHT;
-      console.log(answerStatus.textContent);
+      // console.log(answerStatus.textContent);
    }
    else{
       answerStatus.textContent = ANS_WRONG;
-      console.log(answerStatus.textContent);
+      // console.log(answerStatus.textContent);
    }
 }
 
@@ -98,6 +101,7 @@ function displayScoresSTAT(reportScoreSTAT){
    highscoreStatPnl = document.querySelector("#highscore_panel")
    if(highscoreStatPnl != null)
    {
+      deactivateViewHighScoreInSTAT()
       highscoreStatPnl.style.display = "block";
       var highScoreBox = document.getElementById("high_score");
       highScoreBox.textContent = reportScoreSTAT.playerid + HYPHENAGE + reportScoreSTAT.score;
@@ -107,13 +111,48 @@ function displayScoresSTAT(reportScoreSTAT){
 
 function getGameStopTimerDigit(){
    var digitTimer = document.getElementById("digit-timer");
-
+   // if (!digitTimer.disabled){
+   //    return STRING_EMPTY;
+   // }
    var timerPrint = digitTimer.textContent;
-   //console.log("extract time value: " + timerPrint);
+   console.log("extract time value in func getGameStopTimerDigit: " + timerPrint);
 
    var gamestopDigit = timerPrint.substring(PREFIX_TIMESTAMP.length, timerPrint.length);
    //console.log("my digit is - print 1: " + gamestopDigit);
    return gamestopDigit;
+}
+
+function searchForUniqueDivDisplayedAsBlock(){
+   var taskIdOfFoundDiv = STRING_EMPTY;
+   var divs = document.getElementsByTagName("div");
+   // Loop thru the collection of div elements
+   for(var i = 0; i < divs.length; i++){
+      //scan for the div that got rendered as block
+      var display = divs[i].style.display
+      if(display.toString() == "block"){
+         //console.log("I found the block div!")
+         var locatedDiv = divs[i];
+         taskIdOfFoundDiv = locatedDiv.getAttribute("data-task-id");
+         if (taskIdOfFoundDiv != null){
+            //console.log("Its taskId here is: " + taskIdOfFoundDiv)
+            return taskIdOfFoundDiv;
+         }
+      }
+   }
+}
+
+function deactivateViewHighScoreInSTAT()
+{
+   var btnViewHighScore = document.getElementById("view-score-after");
+   btnViewHighScore.disabled = true; // not going anywhere when about to get the report
+   btnViewHighScore.setAttribute("title", "You're in View High Score screen");
+}
+
+function activateViewHighScoreElseWhereButScreenSTAT()
+{
+   var btnViewHighScore = document.getElementById("view-score-after");
+   btnViewHighScore.disabled = false; // not going anywhere when about to get the report
+   btnViewHighScore.setAttribute("title", STRING_EMPTY);
 }
 /////////////// end of function declarations /////////////////////////
 
@@ -151,6 +190,7 @@ var createTaskList = function(currentQuizes){
    // -- the score report slide
    var highScoreStatEl = createScoreSTATslide();
    dynamicQuestionSet.appendChild(highScoreStatEl);
+   activateViewHighScoreElseWhereButScreenSTAT();
    
 }
 
@@ -165,6 +205,8 @@ var createTaskElNoRemoval = function(quizDataObj) {
       // -- append the individual multiple-choice question into its parent node
       dynamicQuestionSet.appendChild(quizActionsEl);
     
+      
+
       // // Take care of the taskId of the task
       // quizDataObj.id = quizIdCounter;
     
@@ -178,11 +220,6 @@ var createTaskElNoRemoval = function(quizDataObj) {
    };
 
    var createScoreSTATslide = function(){
-      // finalScore = globalCounter.toString();
-      // var formContainerEl = document.createElement("form");
-      // formContainerEl.setAttribute("id", "quiz_report_form");
-      // formContainerEl.style.display = "none";
-   
       var reportScoreContainerEl = document.createElement("div"); 
       reportScoreContainerEl.setAttribute("id", "highscore_panel");
       reportScoreContainerEl.style.display = "none"; //"block"; //"none";
@@ -224,10 +261,7 @@ var createTaskElNoRemoval = function(quizDataObj) {
    
 // Could be called when last slide of quiz reached    
 var createQuizReportSlide = function(){
-   //finalScore = globalCounter.toString();
-   // var formContainerEl = document.createElement("form");
-   // formContainerEl.setAttribute("id", "quiz_report_form");
-   // formContainerEl.style.display = "none";
+   activateViewHighScoreElseWhereButScreenSTAT();
 
    var reportContainerEl = document.createElement("div"); 
    reportContainerEl.setAttribute("id", "quiz_report_panel");
@@ -347,15 +381,14 @@ var taskButtonHandler = function(event) {
    // event.target reports the element on which the event occurs, in this case, the click event.
    // console.log(event.target);
    var targetEl = event.target;
-   
-   // edit button was clicked
+     
    if (targetEl.matches(".multi_choice_btn")) {  // matches() doesn't find and return an element. Instead, it returns true if the element would be returned
       var taskId = targetEl.getAttribute("data-task-id");
       var ansVal = targetEl.getAttribute("data-ans-value");
       //editTask(taskId);
 
       //console.log("taskId is: " + taskId);
-      console.log("ansVal is: " + ansVal);
+      // // console.log("ansVal is: " + ansVal);
 
       if (ansVal.toString().toLocaleLowerCase() === FALSE.toLocaleLowerCase())
       {
@@ -372,6 +405,7 @@ var taskButtonHandler = function(event) {
    } 
    else if (targetEl.matches(".submit_btn")){   // -- Check on Score Submit button in next slide
      console.log("you clicked a submit button!");
+     activateViewHighScoreElseWhereButScreenSTAT();
      collectReportDataForSTATDisplay();
    }
    else if (targetEl.matches(".clear_btn")){   // -- Check on Score Submit button in next slide
@@ -379,12 +413,56 @@ var taskButtonHandler = function(event) {
       clearHighScoreSTAT();
    }
    else if (targetEl.matches(".goback_btn")){
-      console.log("you clicked a goback button!");
-      //console.log("Taskid status: " + taskId);
-      goBackToPreviousReportScreen();
+      console.log("you clicked a goback button!"); 
+      activateViewHighScoreElseWhereButScreenSTAT();
+      console.log("global taskId not known? : " + globalJumpedOffSlideId);
+      if (globalJumpedOffSlideId != STRING_EMPTY){
+         //console.log("The previous quiz-div taskId is: " + globalJumpedOffSlideId)
+         goBackToAnyPreviousQuizSlide(globalJumpedOffSlideId);
+      }   
+      else{
+         goBackToPreviousReportScreen();
+      } 
+      
+   }
+   else if(targetEl.matches(".btn_h6")){
+      console.log("You clicked the View High Score link");      
+      //var taskId = targetEl.getAttribute("data-task-id"); // you know you're in one of the slides
+      //console.log("Can I get taskId here: " + taskId)
+      // jumpAtViewScoreSTAT(taskId);
+      jumpAtViewScoreSTAT();
    }
 
  }; 
+
+var jumpAtViewScoreSTAT =  function(){//function(taskId){
+   var taskId = searchForUniqueDivDisplayedAsBlock();
+   var targetDiv = document.querySelector("div[data-task-id='" + taskId + "']");
+   targetDiv.style.display = "none"; // close current slide that is not null at this point
+   globalJumpedOffSlideId = taskId;
+
+   highscoreStatPnl = document.querySelector("#highscore_panel")
+   if(highscoreStatPnl != null)
+   {
+      deactivateViewHighScoreInSTAT();
+      highscoreStatPnl.style.display = "block"; // let STAT visible
+   }
+
+} 
+
+// This gets called when the Go Back button is clicked, unique case
+var goBackToAnyPreviousQuizSlide = function(taskId){
+   // close current panel
+   highscoreStatPnl = document.querySelector("#highscore_panel")
+   highscoreStatPnl.style.display = "none";
+   // open previous panel
+   var slideSelected = document.querySelector("div[data-task-id='" + taskId + "']");
+   if(!slideSelected){
+      console.log("Coudn't find quiz div to go back");
+      return false;
+   }
+   slideSelected.style.display = "block";
+}
 
 var goBackToPreviousReportScreen = function(){
    // close current panel
@@ -420,10 +498,6 @@ var collectReportDataForSTATDisplay = function(){
     }
      
     var digitTimer = document.getElementById("digit-timer");
-   //  if (digitTimer == null)
-   //  {
-   //     console.log("not found");
-   //  }
     var timerPrint = digitTimer.textContent;
     console.log("extract time value: " + timerPrint);
 
@@ -438,10 +512,11 @@ var collectReportDataForSTATDisplay = function(){
    highscoreStatPnl = document.querySelector("#highscore_panel")
    if(highscoreStatPnl != null)
    {
+      deactivateViewHighScoreInSTAT()
       highscoreStatPnl.style.display = "block";
       var highScoreBox = document.getElementById("high_score");
       highScoreBox.value = reportHighScoreDataObj.playerid + HYPHENAGE + reportHighScoreDataObj.score;
-      if (currentHighScore < reportHighScoreDataObj.playerid)
+      if (currentHighScore < reportHighScoreDataObj.playerid) // Max number logic  
       {
          currentHighScore = reportHighScoreDataObj.playerid;
          saveScoreReport(reportHighScoreDataObj);
@@ -459,68 +534,167 @@ var collectReportDataForSTATDisplay = function(){
    ans_reponse.style.display = "none";
  }
 
- // This function display next slide of question
+ // This function display next slide of question but expect to display the report when
+ // 1. time is out
+ // 2. final quiz slide has reached
  var offerNextQuestion = function(taskId, ansVal){
    console.log("You're in offerNextQuestion function scope")
-   console.log(taskId);
-   console.log(ansVal);
 
    quizAnsRespond(ansVal);
+   // // var nextQuestinId = 0;
+   // // var taskSelectedNext = null; 
 
-   var nextQuestinId = parseInt(taskId) + 1; //console.log(nextQuestinId);
    var taskSelected = document.querySelector("div[data-task-id='" + taskId + "']");   
+   var nextQuestinId = parseInt(taskId) + 1; //console.log(nextQuestinId);
    var taskSelectedNext = document.querySelector("div[data-task-id='" + nextQuestinId + "']");   
 
    taskSelected.style.display = "none"; // I'm closing myself before opening the next slide
-   // console.log(taskSelected); // important
-   
-// //    if(taskSelectedNext != null){
-// //       taskSelectedNext.style.display = "block";
-// //    }
-// //    else{
-// //       // -- when done taking the entire quizes
-// //       console.log("Game Over");
-// // 
-// //       // -- Looking for quiz report panel
-// //       reportPnl = document.querySelector("#quiz_report_panel");
-// //       reportPnl.style.display = "block";
-// //    }
-   
    // console.log(taskSelectedNext); // important
 
-   var tasklistSelected = document.querySelector("#dynamic_question_set");   // testing only
-   console.log((tasklistSelected));
+   // // var tasklistSelected = document.querySelector("#dynamic_question_set");   // testing only
+   // //console.log((tasklistSelected));
+  
+   // var timerDigit = getGameStopTimerDigit(); // get value from the Timer: print thru function call
+   // get value from the Timer: print but do it directly from statments 
+   
+   //-----------------------------------------------------------------------------------   
+   // // THIS BLOCK IS BAD
+   // var digitTimer = document.getElementById("digit-timer");
+   // // console.log(digitTimer.disabled);
+   //  
+   // var timerPrint = digitTimer.textContent; // bad idea 
+   // console.log("extract time value in func getGameStopTimerDigit: " + timerPrint);
+   // // use substring() to get the digit not the prefix
+   // var timerDigit = timerPrint.substring(PREFIX_TIMESTAMP.length, timerPrint.length); 
+   // //console.log("my digit is - print 1: " + gamestopDigit);
+   // 
+   //-------------------------------------------------------------------------------------
 
-   console.log("End of offerNextQuestion function scope")
-   //createTaskEl(quizDataObj_03);
-
-   if(globalCounter === 0)
+   //-------------------------------------------------------------------------------------
+   //
+   //
+   var timerDigit = globalCounter;
+   console.log("What is value of time digit :" + timerDigit); //dont matter
+   //
+   //-------------------------------------------------------------------------------------
+  
+   if(globalCounter <= ZERO + 1) // if(globalCounter == ZERO)
    {
-      console.log("All done - in applyPenalty function");
-      clearInterval(startCountdown); 
-      globalCounter = 0;
+      console.log("Time ran out before finishing quiz");
+      
+      clearInterval(startCountdown); // turn off the timer
+      var gameDigitTimerPrint = document.getElementById("digit-timer") 
+      gameDigitTimerPrint.disabled = true;
+      globalCounter = 0; // reset global time counter
 
-       // -- Looking for quiz report panel to make it visible
+       // -- Looking for quiz report panel to make it visible regardless at what quiz slide
        reportPnl = document.querySelector("#quiz_report_panel");
        if(reportPnl != null)
        {
           reportPnl.style.display = "block";
        }
    }
-   else // if clock has not yet reached Zero 
+   else // if clock has not yet reached Zero, render next questionnaire
    {
       if(taskSelectedNext != null){
          taskSelectedNext.style.display = "block";
       }
       else{
-         // -- when done taking the entire quizes
-         console.log("Game Over");
+         // -- when the last quiz slide is reached expect to see report_panel
+         console.log("Finished before Time ran out");
+        
          clearInterval(startCountdown); 
          var gameDigitTimerPrint = document.getElementById("digit-timer") 
-         gameDigitTimerPrint.disabled = true;
-         console.log("Game Over and Clock should stop");
+         gameDigitTimerPrint.disabled = false;
+         console.log("All quizes visited - Done - Clock should stop with remaining seconds");
+         
          // -- Looking for quiz report panel to make it visible
          reportPnl = document.querySelector("#quiz_report_panel");
+         if(reportPnl != null)
+         {
+            // -- display the score line per timer-stoppage
+            var finalScorePrint = document.querySelector("h5[data-finalscore-print]");
+            stoppedDigit = getGameStopTimerDigit();
+            finalScorePrint.textContent += stoppedDigit; // Display "Your final score is: 15"
+            reportPnl.style.display = "block";
+         }
+      } // end else
+
+      console.log("End of offerNextQuestion function scope")
+   }
+}
+
+// -- This handle wrong answers scoring and print what expected after that 
+var applyPenalty = function(taskId, ansVal) {
+   console.log("You're in applyPenalty function scope")
+
+   quizAnsRespond(ansVal);
+   
+   var taskSelected = document.querySelector("div[data-task-id='" + taskId + "']");
+   var nextQuestinId = parseInt(taskId) + 1; //console.log(nextQuestinId);
+   var taskSelectedNext = document.querySelector("div[data-task-id='" + nextQuestinId + "']");  
+   
+   taskSelected.style.display = "none";
+
+   if(globalCounter > 0 )
+   {
+      globalCounter -= 10;
+   }
+   
+// //    if(globalCounter == ZERO)
+// //    {
+// //       console.log("All done - in applyPenalty function");
+// //       clearInterval(startCountdown); 
+// //       globalCounter = 0;
+// // 
+// //        // -- Looking for quiz report panel to make it visible
+// //        reportPnl = document.querySelector("#quiz_report_panel");
+// //        if(reportPnl != null)
+// //        {
+// //           reportPnl.style.display = "block";
+// //        }
+// //    }
+   console.log("global time in applyPenalty() function is: " + globalCounter);
+      
+   if(globalCounter <= ZERO + 1) // if(globalCounter == ZERO)
+   {
+      console.log("Time ran out before finishing quiz");
+      console.log("global time is: " + globalCounter);
+      
+      clearInterval(startCountdown); // turn off the timer
+      var gameDigitTimerPrint = document.getElementById("digit-timer") 
+      gameDigitTimerPrint.disabled = true;
+      globalCounter = 0; // reset global time counter
+
+      // -- Looking for quiz report panel to make it visible regardless at what quiz slide
+      reportPnl = document.querySelector("#quiz_report_panel");
+      reportPnl.style.display = "block";
+
+      var finalScorePrint = document.querySelector("h5[data-finalscore-print]");
+      finalScorePrint.textContent += globalCounter; // Display "Your final score is: "
+
+         //  if(reportPnl != null)
+      //  {
+      //     reportPnl.style.display = "block";
+      //  }
+   }
+   else // if clock has not yet reached Zero, render next questionnaire
+   {
+      if(taskSelectedNext != null){
+         taskSelectedNext.style.display = "block";
+      }
+      else{
+         // -- when the last quiz slide is reached expect to see report_panel
+         console.log("Finished before Time ran out");
+        
+         clearInterval(startCountdown); 
+         var gameDigitTimerPrint = document.getElementById("digit-timer") 
+         gameDigitTimerPrint.disabled = false;
+         console.log("All quizes visited - Done - Clock should stop with remaining seconds");
+         
+         // -- Looking for quiz report panel to make it visible
+         reportPnl = document.querySelector("#quiz_report_panel");
+         reportPnl.style.display = "block";
          if(reportPnl != null)
          {
             // -- display the score line per timer-stoppage
@@ -529,74 +703,12 @@ var collectReportDataForSTATDisplay = function(){
             finalScorePrint.textContent += stoppedDigit;
             reportPnl.style.display = "block";
          }
-           
-      }
-   }
+      } // end nested else
 
- }
+      console.log("End of applyPenalty function scope")
+   } // end outer else
 
- var applyPenalty = function(taskId, ansVal) {
-
-   quizAnsRespond(ansVal);
-
-   var nextQuestinId = parseInt(taskId) + 1; //console.log(nextQuestinId);
-   var taskSelected = document.querySelector("div[data-task-id='" + taskId + "']");
-   var taskSelectedNext = document.querySelector("div[data-task-id='" + nextQuestinId + "']");  
-   taskSelected.style.display = "none";
-   taskSelectedNext.style.display = "block";
-
-   if(taskSelectedNext != null){
-      taskSelectedNext.style.display = "block";
-   }
-   else{
-      console.log("Game Over");
-   }
-
-   // reportedScore = globalCounter;
-   // reportedScore -= 10;
-   // globalCounter = reportedScore;
-   // console.log ("Score is: " + reportedScore);
-
-   globalCounter -= 10;
    
-   if(globalCounter === 0)
-   {
-      console.log("All done - in applyPenalty function");
-      clearInterval(startCountdown); 
-      globalCounter = 0;
-
-       // -- Looking for quiz report panel to make it visible
-       reportPnl = document.querySelector("#quiz_report_panel");
-       if(reportPnl != null)
-       {
-          reportPnl.style.display = "block";
-       }
-   }
-
-   // quizAnsRespond(ansVal);
-   // <button class="multi_choice_btn" data-task-id="0" data-ans-value="false">This answer is false - Delete</button>
-   //var taskSelected = document.querySelector(".multi_choice_btn[data-ans-value='" + ansVal + "']"); // this works, item is found
-   // taskSelected.remove(); // test remove only - do not use
-
-
-   //display next questionnaire
-
-//    //console.log(taskSelected);
-//  
-//    // create new array to hold updated list of tasks
-//    var updatedTaskArr = [];
-//  
-//    // loop through current tasks
-//    for (var i = 0; i < tasks.length; i++) {
-//      // if tasks[i].id does NOT match the value of taskId, let's keep that task and push it into the new array
-//      if (tasks[i].id !== parseInt(taskId)) {
-//        updatedTaskArr.push(tasks[i]);
-//      }
-//    }
-//  
-//    // reassign tasks array to be the same as updatedTaskArr
-//    tasks = updatedTaskArr; //need to keep the tasks array variable up-to-date at all times
-//    saveTasks();
 
 // ///saveScore();
  
@@ -801,8 +913,7 @@ currentQuizes.push(quizDataObj_03);
 currentQuizes.push(quizDataObj_04);
 currentQuizes.push(quizDataObj_05);
 currentQuizes.push(quizDataObj_06);
-// 
-// currentQuizes.push(quizDataObj_07);
+currentQuizes.push(quizDataObj_07);
 // currentQuizes.push(quizDataObj_08);
 // // currentQuizes.push(quizDataObj_09);
 // currentQuizes.push(quizDataObj_10);

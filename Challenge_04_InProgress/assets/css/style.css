@@ -224,6 +224,21 @@ header {
   border: solid 0 transparent;
 }
 
+/* .btn_h6:hover{
+  color: var(--linkable_secondary_color);
+  /* color: rgb(62, 63, 65); */
+  background-color: transparent;
+  padding-top: 0;
+  cursor: pointer;
+  display: inline-block;margin:43px 1px 6px 9px;padding: 0; 
+  min-width: 110px; min-height: 15px; 
+  line-height: 13px; 
+  font-size: 13px; font-weight: bold;
+  border: solid 0 transparent;
+
+  text-decoration: underline overline;
+} */
+
 .quizcard-body h6{
   color: var(--linkable_secondary_color);
   margin:14px 10px 6px 17px;
@@ -362,6 +377,7 @@ header {
 button[disabled] {
   cursor: default;
   background: var(--bright_bg_color_secondary);
+  text-decoration: none;
 }
 
 .quizcard-body .submit_btn{
