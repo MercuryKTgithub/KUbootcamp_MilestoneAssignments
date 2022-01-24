@@ -36,12 +36,13 @@ var introCard = document.getElementById("quiz-intro");
 
 var dynamicQuestionSet = document.getElementById("dynamic_question_set"); // div
 var answerStatus = document.getElementById("quiz_answer_response"); // h4
-var gameDigitTimerPrint = null;
+//var gameDigitTimerPrint = null;
 
+// -- Clock is counting down 
 var countDownTimer = function(){
-     gameDigitTimerPrint = document.getElementById("digit-timer") // not a global var
+     var gameDigitTimerPrint = document.getElementById("digit-timer") // not a global var
    //globalCounter = 20;
-   console.log(globalCounter); // important
+   console.log("globalCounter in countDownTime is: " + globalCounter); // important
    if(globalCounter.toString().length < 2)
    {
       gameDigitTimerPrint.style.marginLeft = "68%";
@@ -58,7 +59,7 @@ var countDownTimer = function(){
    {
       console.log("Time has reached zero. Print inside countDownTimer()");
       clearInterval(startCountdown); 
-      globalCounter = 0;
+      // globalCounter = 0;
       gameDigitTimerPrint.disabled = true; //disable the clock when 0
    }
 };
@@ -99,13 +100,17 @@ function quizAnsRespond(status){
 
 function displayScoresSTAT(reportScoreSTAT){
    highscoreStatPnl = document.querySelector("#highscore_panel")
-   if(highscoreStatPnl != null)
-   {
-      deactivateViewHighScoreInSTAT()
-      highscoreStatPnl.style.display = "block";
-      var highScoreBox = document.getElementById("high_score");
-      highScoreBox.textContent = reportScoreSTAT.playerid + HYPHENAGE + reportScoreSTAT.score;
-   }
+   deactivateViewHighScoreInSTAT()
+   highscoreStatPnl.style.display = "block";
+   var highScoreBox = document.getElementById("high_score");
+   highScoreBox.textContent = reportScoreSTAT.playerid + HYPHENAGE + reportScoreSTAT.score;
+   // if(highscoreStatPnl != null)
+   // {
+   //    deactivateViewHighScoreInSTAT()
+   //    highscoreStatPnl.style.display = "block";
+   //    var highScoreBox = document.getElementById("high_score");
+   //    highScoreBox.textContent = reportScoreSTAT.playerid + HYPHENAGE + reportScoreSTAT.score;
+   // }
 
 }
 
@@ -141,11 +146,22 @@ function searchForUniqueDivDisplayedAsBlock(){
    }
 }
 
+function redirectViewHighScoreInSTAT()
+{
+   var btnViewHighScore = document.getElementById("view-score-after");
+   // you are at the the report for the score already
+   btnViewHighScore.setAttribute("title", "Please click submit button to view score statics instead");
+   btnViewHighScore.disabled = true; 
+   btnViewHighScore.setAttribute("cursor", "none");
+}
+
 function deactivateViewHighScoreInSTAT()
 {
    var btnViewHighScore = document.getElementById("view-score-after");
-   btnViewHighScore.disabled = true; // not going anywhere when about to get the report
+   // you are at the the report for the score already
    btnViewHighScore.setAttribute("title", "You're in View High Score screen");
+   btnViewHighScore.disabled = true; 
+   btnViewHighScore.setAttribute("cursor", "none");
 }
 
 function activateViewHighScoreElseWhereButScreenSTAT()
@@ -159,7 +175,9 @@ function activateViewHighScoreElseWhereButScreenSTAT()
 var saveScoreReport = function(reportDataObj) {
    //localStorage.setItem() saves data to localStorage.
    localStorage.setItem("scores", JSON.stringify(reportDataObj)); // converted the tasks array into a string
- }
+   console.log("Calling from saveScoreReport");
+   
+}
 
  // Loads stuff from localStorage
  var loadScoreReport = function() {
@@ -169,11 +187,12 @@ var saveScoreReport = function(reportDataObj) {
    }
    savedScores = JSON.parse(savedScores); // of type reportDataObj
    console.log(savedScores); // important
-   // loop through savedScores array of objects
-   for (var i = 0; i < savedScores.length; i++) { // length is one anyway cause we only save the whoever has higher score in session
-     // pass each task object into the `createTaskEl()` function
-     displayScoresSTAT(savedScores[i]);
-   }
+   return savedScores;
+   // // // loop through savedScores array of objects
+   // // for (var i = 0; i < savedScores.length; i++) { // length is one anyway cause we only save the whoever has higher score in session
+   // //   // pass each task object into the `createTaskEl()` function
+   // //   displayScoresSTAT(savedScores[i]);
+   // // }
  }
 
 var createTaskList = function(currentQuizes){
@@ -185,7 +204,7 @@ var createTaskList = function(currentQuizes){
    var quizReportEl = createQuizReportSlide();
    dynamicQuestionSet.appendChild(quizReportEl);
 
-   console.log(dynamicQuestionSet);
+   console.log(dynamicQuestionSet); //important
    
    // -- the score report slide
    var highScoreStatEl = createScoreSTATslide();
@@ -201,11 +220,9 @@ var createTaskElNoRemoval = function(quizDataObj) {
       // -- Create html stuff for individual multiple-choice question
       var quizActionsEl = createQuizActionsGeneric(quizIdCounter, quizDataObj); // works
    
-      console.log(quizActionsEl);     //Test
+      ////console.log(quizActionsEl);     //Test
       // -- append the individual multiple-choice question into its parent node
       dynamicQuestionSet.appendChild(quizActionsEl);
-    
-      
 
       // // Take care of the taskId of the task
       // quizDataObj.id = quizIdCounter;
@@ -374,7 +391,7 @@ var createQuizActionsGeneric  = function(askawayId, quizDataObj) {
 
  };
 
-// (4) 
+// (4) --------------------------------------------------------------------------------------------------
 // Even Handler for eah answer 'button' 
 var taskButtonHandler = function(event) {
    // get target element from event. 
@@ -441,12 +458,11 @@ var jumpAtViewScoreSTAT =  function(){//function(taskId){
    targetDiv.style.display = "none"; // close current slide that is not null at this point
    globalJumpedOffSlideId = taskId;
 
+   collectReportDataForSTATDisplay();
+
    highscoreStatPnl = document.querySelector("#highscore_panel")
-   if(highscoreStatPnl != null)
-   {
-      deactivateViewHighScoreInSTAT();
-      highscoreStatPnl.style.display = "block"; // let STAT visible
-   }
+   deactivateViewHighScoreInSTAT();
+   highscoreStatPnl.style.display = "block"; // let STAT visible
 
 } 
 
@@ -464,17 +480,19 @@ var goBackToAnyPreviousQuizSlide = function(taskId){
    slideSelected.style.display = "block";
 }
 
-var goBackToPreviousReportScreen = function(){
-   // close current panel
+// This takes to the screen "All done! where it has a submit button to store Initials
+ var goBackToPreviousReportScreen = function(){
+   
    highscoreStatPnl = document.querySelector("#highscore_panel")
-   highscoreStatPnl.style.display = "none";
-   // open previous panel
+   highscoreStatPnl.style.display = "none";// close current panel
+   
    var slideSelected = document.querySelector("#quiz_report_panel")
    if(!slideSelected){
       console.log("Coudn't find item to go back");
       return false;
    }
-   slideSelected.style.display = "block";
+   redirectViewHighScoreInSTAT();
+   slideSelected.style.display = "block"; // open previous panel
 }
 
 var clearHighScoreSTAT = function(){
@@ -482,7 +500,7 @@ var clearHighScoreSTAT = function(){
    highScoreBox.value = STRING_EMPTY;
 }
 
-// Will also expose the final slide which is the highscore statistics 
+// -- Will also expose the final slide which is the highscore statistics 
 var collectReportDataForSTATDisplay = function(){
     var playerInitials = document.getElementById("player_initials");
    //  var playerInitials = document.querySelector("#player_initials");
@@ -493,51 +511,74 @@ var collectReportDataForSTATDisplay = function(){
       if(!initials)
       {
          alert("Please provide your initials!");
-         return false;
+         // return false;
       }
     }
-     
-    var digitTimer = document.getElementById("digit-timer");
-    var timerPrint = digitTimer.textContent;
-    console.log("extract time value: " + timerPrint);
-
-    var gamestopDigit = timerPrint.substring(PREFIX_TIMESTAMP.length, timerPrint.length);
-    console.log("my digit is - print 1: " + gamestopDigit);
+    
+   //  // no good, look at globalCounter instead because deduction could cause neg value on counter
+   //  var digitTimer = document.getElementById("digit-timer"); 
+   //  var timerPrint = digitTimer.textContent;
+   //  var gamestopDigit = timerPrint.substring(PREFIX_TIMESTAMP.length, timerPrint.length);
+  
+   //  Alternatively
+   var finalScorePrint = document.querySelector("h5[data-finalscore-print]").textContent.toString();
+   knownScore = finalScorePrint.substring(SCORE_REPORT_LINE.length - 1, finalScorePrint.length);
    
-    var reportHighScoreDataObj = {
+   // var slideSelected = document.querySelector("#quiz_report_panel")
+   // slideSelected.style.display = "none"; // close itself
+
+   var liveScoreDataObj = {
       playerid: initials,
-      score: gamestopDigit
+      score: parseInt(knownScore)
       };
 
    highscoreStatPnl = document.querySelector("#highscore_panel")
-   if(highscoreStatPnl != null)
+   highscoreStatPnl.style.display = "block";
+
+   deactivateViewHighScoreInSTAT()
+
+   var reportedDataObj = loadScoreReport();
+
+   // for (var i = 0; i < reportedDataObj.length; i++) { // length is one anyway cause we only save the whoever has higher score in session
+   //   // pass each task object into the `createTaskEl()` function
+   //   //displayScoresSTAT(reportedDataObj[i]);
+   //   console.log(reportedDataObj.score)
+   // }
+
+   console.log("Id is: " + reportedDataObj.playerid);
+   console.log("Score is: " + reportedDataObj.score);
+
+   // Display purpose only
+   var highScoreBox = document.getElementById("high_score");
+   highScoreBox.value = liveScoreDataObj.playerid + HYPHENAGE + liveScoreDataObj.score;
+   console.log(highScoreBox.value);
+   
+   if (reportedDataObj.score <= liveScoreDataObj.score) // Max number logic  
    {
-      deactivateViewHighScoreInSTAT()
-      highscoreStatPnl.style.display = "block";
-      var highScoreBox = document.getElementById("high_score");
-      highScoreBox.value = reportHighScoreDataObj.playerid + HYPHENAGE + reportHighScoreDataObj.score;
-      if (currentHighScore < reportHighScoreDataObj.playerid) // Max number logic  
-      {
-         currentHighScore = reportHighScoreDataObj.playerid;
-         saveScoreReport(reportHighScoreDataObj);
-      }
-      // console.log("my digit is - print 2: " +  highScoreBox.value.toString() );
+      currentHighScore = liveScoreDataObj.score; // Update old max value to new max value (greater)
+      // -- call out to the saving function that moves data to localStorage
+      console.log("Do you come here inside the if-statement");
+     
+      saveScoreReport(liveScoreDataObj); // check that the greater score has been saved
    }
+   console.log("Do you come here after calling saveScoreReport"); 
+      // console.log("my digit is - print 2: " +  highScoreBox.value.toString() );
+//  }
 
    var slideSelected = document.querySelector("#quiz_report_panel")
    slideSelected.style.display = "none"; // close itself
 
-   // -- close couple other things
+   // -- close out couple other things
    var separator = document.getElementById("slide_divider");
    separator.style.display = "none";
    var ans_reponse = response = document.getElementById("quiz_answer_response")
    ans_reponse.style.display = "none";
- }
-
+}
+//---------------------------------------------------------------------------------------------
  // This function display next slide of question but expect to display the report when
  // 1. time is out
  // 2. final quiz slide has reached
- var offerNextQuestion = function(taskId, ansVal){
+var offerNextQuestion = function(taskId, ansVal){
    console.log("You're in offerNextQuestion function scope")
 
    quizAnsRespond(ansVal);
@@ -549,43 +590,14 @@ var collectReportDataForSTATDisplay = function(){
    var taskSelectedNext = document.querySelector("div[data-task-id='" + nextQuestinId + "']");   
 
    taskSelected.style.display = "none"; // I'm closing myself before opening the next slide
-   // console.log(taskSelectedNext); // important
-
-   // // var tasklistSelected = document.querySelector("#dynamic_question_set");   // testing only
-   // //console.log((tasklistSelected));
   
-   // var timerDigit = getGameStopTimerDigit(); // get value from the Timer: print thru function call
-   // get value from the Timer: print but do it directly from statments 
-   
-   //-----------------------------------------------------------------------------------   
-   // // THIS BLOCK IS BAD
-   // var digitTimer = document.getElementById("digit-timer");
-   // // console.log(digitTimer.disabled);
-   //  
-   // var timerPrint = digitTimer.textContent; // bad idea 
-   // console.log("extract time value in func getGameStopTimerDigit: " + timerPrint);
-   // // use substring() to get the digit not the prefix
-   // var timerDigit = timerPrint.substring(PREFIX_TIMESTAMP.length, timerPrint.length); 
-   // //console.log("my digit is - print 1: " + gamestopDigit);
-   // 
-   //-------------------------------------------------------------------------------------
-
-   //-------------------------------------------------------------------------------------
-   //
-   //
-   var timerDigit = globalCounter;
-   console.log("What is value of time digit :" + timerDigit); //dont matter
-   //
-   //-------------------------------------------------------------------------------------
-  
-   if(globalCounter <= ZERO + 1) // if(globalCounter == ZERO)
+   if(globalCounter <= ZERO ) // if(globalCounter == ZERO)
    {
       console.log("Time ran out before finishing quiz");
       
       clearInterval(startCountdown); // turn off the timer
       var gameDigitTimerPrint = document.getElementById("digit-timer") 
       gameDigitTimerPrint.disabled = true;
-      globalCounter = 0; // reset global time counter
 
        // -- Looking for quiz report panel to make it visible regardless at what quiz slide
        reportPnl = document.querySelector("#quiz_report_panel");
@@ -593,6 +605,7 @@ var collectReportDataForSTATDisplay = function(){
        {
           reportPnl.style.display = "block";
        }
+       //globalCounter = 0; // reset global time counter
    }
    else // if clock has not yet reached Zero, render next questionnaire
    {
@@ -601,29 +614,46 @@ var collectReportDataForSTATDisplay = function(){
       }
       else{
          // -- when the last quiz slide is reached expect to see report_panel
-         console.log("Finished before Time ran out");
+         console.log("Finished in offerNextQuestion before Time ran out");
         
-         clearInterval(startCountdown); 
-         var gameDigitTimerPrint = document.getElementById("digit-timer") 
-         gameDigitTimerPrint.disabled = false;
-         console.log("All quizes visited - Done - Clock should stop with remaining seconds");
-         
+//          clearInterval(startCountdown)
+// 
+//          var gameDigitTimerPrint = document.getElementById("digit-timer") 
+//          gameDigitTimerPrint.disabled = false;
+//          console.log("All quizes visited - done in offerNextQuestion - Clock should stop with remaining seconds");
+//          
          // -- Looking for quiz report panel to make it visible
          reportPnl = document.querySelector("#quiz_report_panel");
-         if(reportPnl != null)
-         {
-            // -- display the score line per timer-stoppage
-            var finalScorePrint = document.querySelector("h5[data-finalscore-print]");
-            stoppedDigit = getGameStopTimerDigit();
-            finalScorePrint.textContent += stoppedDigit; // Display "Your final score is: 15"
-            reportPnl.style.display = "block";
-         }
+         reportPnl.style.display = "block";
+
+         console.log("globalCounter in offerNextQuestion is: " + globalCounter);
+
+         var timerDigit = getGameStopTimerDigit();
+         var finalScorePrint = document.querySelector("h5[data-finalscore-print]"); // Your final score is:
+         finalScorePrint.textContent += timerDigit;
+
+         // // if(reportPnl != null)
+         // // {
+         // //    // -- display the score line per timer-stoppage
+         // //    var finalScorePrint = document.querySelector("h5[data-finalscore-print]");
+         // //    
+         // //    finalScorePrint.textContent += globalCounter.toString();
+         // //    reportPnl.style.display = "block";
+         // // }
+
+
+         clearInterval(startCountdown); // important to stop clock going down negative
+         var gameDigitTimerPrint = document.getElementById("digit-timer") 
+         gameDigitTimerPrint.disabled = false;
+         console.log("All quizes visited - done in offerNextQuestion - Clock should stop with remaining seconds");
+         
       } // end else
 
       console.log("End of offerNextQuestion function scope")
    }
 }
 
+// -------------------------------------------------------------------------------------------
 // -- This handle wrong answers scoring and print what expected after that 
 var applyPenalty = function(taskId, ansVal) {
    console.log("You're in applyPenalty function scope")
@@ -641,30 +671,17 @@ var applyPenalty = function(taskId, ansVal) {
       globalCounter -= 10;
    }
    
-// //    if(globalCounter == ZERO)
-// //    {
-// //       console.log("All done - in applyPenalty function");
-// //       clearInterval(startCountdown); 
-// //       globalCounter = 0;
-// // 
-// //        // -- Looking for quiz report panel to make it visible
-// //        reportPnl = document.querySelector("#quiz_report_panel");
-// //        if(reportPnl != null)
-// //        {
-// //           reportPnl.style.display = "block";
-// //        }
-// //    }
-   console.log("global time in applyPenalty() function is: " + globalCounter);
+   console.log("Global time in applyPenalty() is at: " + globalCounter);
       
    if(globalCounter <= ZERO + 1) // if(globalCounter == ZERO)
    {
-      console.log("Time ran out before finishing quiz");
+      console.log("Time ran out before finishing quizes - in applyPenalty");
       console.log("global time is: " + globalCounter);
       
       clearInterval(startCountdown); // turn off the timer
-      var gameDigitTimerPrint = document.getElementById("digit-timer") 
+      var gameDigitTimerPrint = document.getElementById("digit-timer") ;
       gameDigitTimerPrint.disabled = true;
-      globalCounter = 0; // reset global time counter
+       // reset global time counter
 
       // -- Looking for quiz report panel to make it visible regardless at what quiz slide
       reportPnl = document.querySelector("#quiz_report_panel");
@@ -677,6 +694,7 @@ var applyPenalty = function(taskId, ansVal) {
       //  {
       //     reportPnl.style.display = "block";
       //  }
+      globalCounter = ZERO;
    }
    else // if clock has not yet reached Zero, render next questionnaire
    {
@@ -685,11 +703,12 @@ var applyPenalty = function(taskId, ansVal) {
       }
       else{
          // -- when the last quiz slide is reached expect to see report_panel
-         console.log("Finished before Time ran out");
+         console.log("Finished before Time ran out in applyPenalty()");
         
-         clearInterval(startCountdown); 
-         var gameDigitTimerPrint = document.getElementById("digit-timer") 
-         gameDigitTimerPrint.disabled = false;
+//          clearInterval(startCountdown); // important
+// 
+//          var gameDigitTimerPrint = document.getElementById("digit-timer") 
+//          gameDigitTimerPrint.disabled = false;
          console.log("All quizes visited - Done - Clock should stop with remaining seconds");
          
          // -- Looking for quiz report panel to make it visible
@@ -699,10 +718,14 @@ var applyPenalty = function(taskId, ansVal) {
          {
             // -- display the score line per timer-stoppage
             var finalScorePrint = document.querySelector("h5[data-finalscore-print]");
-            stoppedDigit = getGameStopTimerDigit();
-            finalScorePrint.textContent += stoppedDigit;
+
+            finalScorePrint.textContent += globalCounter.toString();
             reportPnl.style.display = "block";
          }
+         clearInterval(startCountdown); // important
+
+         var gameDigitTimerPrint = document.getElementById("digit-timer") 
+         gameDigitTimerPrint.disabled = false;
       } // end nested else
 
       console.log("End of applyPenalty function scope")
