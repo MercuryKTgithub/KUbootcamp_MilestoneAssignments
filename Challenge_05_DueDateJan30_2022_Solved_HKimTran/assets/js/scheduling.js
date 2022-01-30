@@ -5,27 +5,15 @@ const ITEM_PASS_HR_GRAY = "form-control bg-secondary edit-mode"
 const ITEM_WITHIN_CURR_HR_RED = "form-control bg-danger edit-mode"
 const COLON = ":";
 
-var BIZ_HR_START = "1:00 AM"; // will change accordingly to reflect actual business time
+var BIZ_HR_START = "8:00 AM"; // will change accordingly to reflect actual business time
 var HTML_DSPACE = "&nbsp;&nbsp;"
 var SPACE = " ";
 
 // -- Render the colors of the existing tasks per time sensitive conditional checking
 var auditTask = function(taskEl) {
    // -- to ensure element is getting to the function
-   console.log(taskEl);   
-
+   // console.log(taskEl);   
    var hrBlock = $(taskEl).find("span").text().trim();
-   // // ensure it worked
-   // console.log(hrBlock); 
-
-   var nexthrBlock = (parseInt(hrBlock.split(COLON)[0]) + 1).toString() + COLON + hrBlock.split(COLON)[1].toString();
-   // console.log(nexthrBlock);
-   
-   // // For quick test only:
-   // // Get moment object #1
-   // var yesterday = '29-Jan-2022, 11:00 PM';
-   // var currentDateTime = moment(yesterday, 'DD-MMM-YYYY, hh:mm A' ); 
-   // console.log(currentDateTime.format('DD-MMM-YYYY, hh:mm A') + " is the yesterday moment obj formatted");
 
    // // Get moment object #1 is currentDateTime
    var currentDateTime = moment(); // moment obj of today --  being the current day
@@ -34,21 +22,18 @@ var auditTask = function(taskEl) {
    console.log(currentHourFormated + " is the current hour");
 
    var currentDateFormated = moment().format("DD-MMM-YYYY"); // want to get the Date portion of today
-   console.log(currentDateFormated)
+   console.log(currentDateFormated + " is the current Date Time moment obj")
    
    // Make the hour-block located on the left side become today's hour stamp so I can get the moment object out of it
    var hrBlockDateTimeFormatted = currentDateFormated +  SPACE + hrBlock;  // hrBlock = 1:00 AM
    console.log(hrBlockDateTimeFormatted + " is the hr block moment obj formatted");
    // Get moment object #2
    var hrBlockDateTime = moment(hrBlockDateTimeFormatted, 'DD-MMM-YYYY, hh:mm A' ); // moment object 
-
-    // Make the next hour-block located on the left side become today's next hour stamp so I can get the moment object out of it
-    var nexthrBlockDateTimeFormatted = currentDateFormated +  SPACE + nexthrBlock;  // hrBlock = 1:00 AM
-    console.log(nexthrBlockDateTimeFormatted + " is the NEXT hr block moment obj formatted");
-    // Get moment object #2
-    var nexthrBlockDateTime = moment(nexthrBlockDateTimeFormatted, 'DD-MMM-YYYY, hh:mm A' ); // moment object 
- 
-   console.log( hrBlockDateTime < currentDateTime);
+   // Get moment object #3
+    var nexthrBlockDateTime = moment(hrBlockDateTime).add(1, 'hours');
+    console.log(nexthrBlockDateTime.format('DD-MMM-YYYY, hh:mm A') + " is new variable");
+  
+   console.log(hrBlockDateTime < currentDateTime);
    console.log(currentDateTime < nexthrBlockDateTime ); 
 
    // Remove whateve css classes were applied
@@ -67,13 +52,14 @@ var auditTask = function(taskEl) {
       }
       else{
          $(taskEl).find("textarea").addClass(ITEM_PASS_HR_GRAY);
+         $(taskEl).find("textarea").prop("readonly", true);
+         $(taskEl).find("button").attr("disabled","disabled") ;
       }     
    }
    else{
       $(taskEl).find("textarea").addClass(ITEM_FUTURE_HR_GREEN);
    }
-  
- };
+};
 
 // Display the layout of the scheduler per per given mock-up where a schedule task item to be populated or edited
 var displaySchedulerWithLeftEdgeHourBlock = function() {//function(taskEl) {
