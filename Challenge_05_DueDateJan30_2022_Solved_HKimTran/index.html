@@ -7,9 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="Description" content="Enter your description here" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Staatliches&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="assets/css/workday.css">
 
-  <title>Input Group Centered Layout</title>
+  <title>Input Group - Textarea Within</title>
 </head>
 
 <body>
@@ -25,16 +27,17 @@
         <!-- Bootstrap preset color classes for backgrounds and text -->
         <p class="display-3 text-center text-dark">Work Day Scheduler</p>
         <h5 class="text-center text-dark">A Simple Calendar App for Scheduling Your Work Day</h5>
-        <p class="display-5 text-center text-dark">Friday, January 28, 2022</p>
+        <p id="current_date" class="display-5 text-center text-dark"></p>
 
         <div class="bg-white my-2 p-4 rounded border-dark border-top border-bottom">
 
-         <div class="input-group input-group-lg">
-            <div class="input-group-prepend ">
-               <span class="input-group-text hour-minute">&nbsp;&nbsp;8:00 AM</span>
+         <div class="input-group input-group-lg" > 
+            <div class="input-group-prepend">
+               <!-- <span class="input-group-text hour-minute">&nbsp;&nbsp;8:00 AM</span> -->
+               <span class="input-group-text hour-minute"></span>
              </div>
 
-             <textarea class="form-control bg-primary edit-mode" aria-label="With textarea">Clean monitors</textarea>
+             <textarea class="form-control bg-primary edit-mode" aria-label="With textarea">Clean</textarea>
              <!-- <input type="text" aria-label="Last name" class="form-control bg-primary" readonly> -->
              
              <div class="input-group-append">
@@ -169,7 +172,13 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+  <!-- jQuery UI is loaded after the core jQuery library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <!-- Add touch punch here -->
+  <!-- Similar to how jQuery UI needed to load after jQuery, Touch Punch needs to load after jQuery UI. -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery-ui-touch-punch@0.2.3/jquery.ui.touch-punch.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="./assets/js/scheduling.js"></script>
 </body>
 
