@@ -27,19 +27,21 @@ var taskSet = JSON.parse(localStorage.getItem("allEntries"));
 if(taskSet == null){ taskSet = [];}
 var taskInputGrp = $("div[class='input-group input-group-lg']");
 
-const INACTIVE_BTN_MSG = "Button is inactive as the scheduled block has passed current time."
+const ACTIVE_BTN_MSG = "Click to save entry so updated content can be reflected"
 const ITEM_FUTURE_HR_GREEN = "form-control bg-success edit-mode"
 const ITEM_PASS_HR_GRAY = "form-control bg-secondary edit-mode"
 const ITEM_WITHIN_CURR_HR_RED = "form-control bg-danger edit-mode"
 const COLON = ":";
 const STRING_EMPTY = '';
-
-var BIZ_HR_START = "9:00 AM"; // will change accordingly to reflect actual business time
 var HTML_DSPACE = "&nbsp;&nbsp;"
 var SPACE = " "; 
+//*************** *************** ************* *************** ************* **************/
+//// Must change accordingly to reflect actual morning business time, tentatively starts at 8:00 AM
+var BIZ_HR_START = "8:00 AM"; //"11:00 AM"; 
+//*************** **************** ************ *************** *************** *************/
 
 // Displays the layout of the scheduler per per given mock-up where a schedule task item to be populated or edited
-var displaySchedulerWithLeftEdgeHourBlock = function() {//function(taskEl) {
+var displaySchedulerWithLeftEdgeFullHourBlock = function() {//function(taskEl) {
 
    var initialTime =  moment(BIZ_HR_START, ["HH:mm"]) ;
    var hourBlocks = $("span[class='input-group-text hour-minute'");
@@ -117,16 +119,18 @@ var auditTaskStatus = function(taskEl)
          // equivalent to (hrBlockDateTime < currentDateTime) && (currentDateTime < nexthrBlockDateTime)
          //  (9:00 AM < 9:23 AM() && (9:23 AM < 10:00 AM)
          $(taskEl).find("textarea").addClass(ITEM_WITHIN_CURR_HR_RED);
+         $(taskEl).find("button").prop("title", ACTIVE_BTN_MSG);
       }
       else{
          $(taskEl).find("textarea").addClass(ITEM_PASS_HR_GRAY);
-         $(taskEl).find("textarea").prop("readonly", true);
-         $(taskEl).find("button").attr("disabled","disabled") ;
-         $(taskEl).find("button").prop("title", INACTIVE_BTN_MSG);
+         // $(taskEl).find("textarea").prop("readonly", true);
+         // $(taskEl).find("button").attr("disabled","disabled") ;
+         $(taskEl).find("button").prop("title", ACTIVE_BTN_MSG);
       }     
    }
    else{
       $(taskEl).find("textarea").addClass(ITEM_FUTURE_HR_GREEN);
+      $(taskEl).find("button").prop("title", ACTIVE_BTN_MSG);
    }
 
 };
@@ -169,9 +173,11 @@ var renderTasksPerCurrentTime = function() {
    var currentDate = moment();
    $("#current_date").append(currentDate.format('dddd, MMMM Do YYYY')); // let the header display today date
 
-   displaySchedulerWithLeftEdgeHourBlock();
+   $("#current_time").append('[ ' + currentDate.format('LT') + ' ]'); // let the header display today date
+
+   displaySchedulerWithLeftEdgeFullHourBlock();
    console.log(taskInputGrp);
-   
+   // scanGrayBgColorTextAreas();
    // populateContentSinceLastEdited();
       
    // taskInputGrp is a global entity, desiged to be assessible from every where
@@ -181,7 +187,7 @@ var renderTasksPerCurrentTime = function() {
    }
 
    populateContentSinceLastEdited(); 
-  
+   
 };
 
 // Gets called when the Save Button is clicked, it will save the task-entry into local storage
@@ -193,6 +199,20 @@ var saveUpdatedTaskDetail = function(taskEl, btnIdNo)
 
    if(taskSet == null){taskSet = [];}
 
+   for (var j = 0; j < taskSet.length ; j++)
+   {
+      var taskId = parseInt(taskSet[j].taskNo);
+      if (taskId == btnIdNo)
+      {
+         alert("You've already hit Save once");
+         // delete taskSet[j];
+         // break;
+         taskSet.pop()
+         break;
+      }
+      
+   }
+
    scheduledTask = {
       taskNo: btnIdNo,
       taskDesc: txtAreaTaskDetail
@@ -201,6 +221,8 @@ var saveUpdatedTaskDetail = function(taskEl, btnIdNo)
    taskSet.push(scheduledTask);  
    console.log(taskSet.length + " is the length of array taskSet after some pushing per save button click event")
    localStorage.setItem("taskSet", JSON.stringify(taskSet));
+
+   // scanGrayBgColorTextAreas();
 } 
 
  //+++++++++++++++++++++++++++++++++++ EVENT HANDLER P.1 ++++++++++++++++++++++++++++++++++++++++++
@@ -224,7 +246,7 @@ var saveUpdatedTaskDetail = function(taskEl, btnIdNo)
       .addClass("text-light")
       .addClass(rowbgcolor)
       .val(text) // -- ASSIGN TO 2ND UI
-      .prop("readonly", true); // -- Passes current time, task is no longer editable
+      // .prop("readonly", true); // -- Passes current time, task is no longer editable
    }
    else{
       // Create a new <textarea> element. 
@@ -244,7 +266,7 @@ var saveUpdatedTaskDetail = function(taskEl, btnIdNo)
 //------------------------------------------ EVENT HANDLER P.2----------------------------------------------//
 
 $("#button_addon_1").on("click", function() {  
-   console.log("<button 1> was clicked");
+   // console.log("<button 1> was clicked");
    btnId = "button_addon_1";
   
    btnIdNo = btnId.split('_')[2];
@@ -254,7 +276,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_2").on("click", function() {  
-   console.log("<button 2> was clicked");
+   // console.log("<button 2> was clicked");
    btnId = "button_addon_2";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -262,7 +284,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_3").on("click", function() {  
-   console.log("<button 3> was clicked");
+   // console.log("<button 3> was clicked");
    btnId = "button_addon_3";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -270,7 +292,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_4").on("click", function() {  
-   console.log("<button 4> was clicked");
+   // console.log("<button 4> was clicked");
    btnId = "button_addon_4";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -278,7 +300,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_5").on("click", function() {  
-   console.log("<button 5> was clicked");
+   // console.log("<button 5> was clicked");
    btnId = "button_addon_5";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -286,7 +308,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_6").on("click", function() {  
-   console.log("<button 6> was clicked");
+   // console.log("<button 6> was clicked");
    btnId = "button_addon_6";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -299,7 +321,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_7").on("click", function() {  
-   console.log("<button 7> was clicked");
+   // console.log("<button 7> was clicked");
    btnId = "button_addon_7";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked") ;// print 1
@@ -307,7 +329,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_8").on("click", function() {  
-   console.log("<button 8> was clicked");
+   // console.log("<button 8> was clicked");
    btnId = "button_addon_8";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -315,7 +337,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_9").on("click", function() {  
-   console.log("<button 9> was clicked");
+   // console.log("<button 9> was clicked");
    btnId = "button_addon_9";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -323,7 +345,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_10").on("click", function() {  
-   console.log("<button 10> was clicked");
+   // console.log("<button 10> was clicked");
    btnId = "button_addon_10";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -331,7 +353,7 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_11").on("click", function() {  
-   console.log("<button 11> was clicked");
+   // console.log("<button 11> was clicked");
    btnId = "button_addon_11";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
@@ -339,12 +361,11 @@ $("#button_addon_1").on("click", function() {
  });
 
  $("#button_addon_12").on("click", function() {  
-   console.log("<button 12> was clicked");
+   // console.log("<button 12> was clicked");
    btnId = "button_addon_12";
    btnIdNo = btnId.split('_')[2];
    console.log(btnIdNo + " is clicked"); // print 1
    saveUpdatedTaskDetail(taskInputGrp[parseInt(btnIdNo) - 1], btnIdNo);
  });
-
 
 renderTasksPerCurrentTime();
