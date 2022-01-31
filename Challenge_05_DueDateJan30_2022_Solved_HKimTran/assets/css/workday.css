@@ -13,11 +13,21 @@
 
 .edit-mode{
    max-height: 48px;
-   color: #000000;
-   font-size: 13px !important;
+   color: whitesmoke; /*#000000;*/
+   font-size: 14px !important;
    /* vertical-align: top; */
    padding-top: 3px !important;
    resize: none;
    overflow: hidden;
-  
+}
+
+.edit-mode-action{
+   max-height: 48px;
+   /* color: whitesmoke; */
+   font-size:14px !important;
+   /* vertical-align: top; */
+   padding-top: 3px !important;
+   resize: none;
+   overflow: hidden;
+   
 }
