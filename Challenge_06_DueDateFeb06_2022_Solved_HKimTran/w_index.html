@@ -25,14 +25,16 @@
         <h3 class="card-header">Search for a City</h3>
           <form id="city_form" class="card-body">
             <input name="city_name" id="city_name" type="text" class="form-input" placeholder="Enter a City"/>
-            <button type="submit" class="btn">Get City Weather</button> 
+            <button type="submit" class="btn">Search</button> 
+            <!-- <img src="#" > -->
           </form>
       </div>
       <div class="card_history">
-        <h3 class="card_history_header">  </h3>
-        <form id="user-form" class="card-body">
-          <input  type="text" class="search-history" readonly />
-        </form>
+        <div class="card-body">
+          <div class="search_pole" id="pole_blue_theme">
+            
+          </div>
+        </div>
       </div>
     </div>
     <!-- End of Left Panel -->
@@ -40,75 +42,40 @@
     <!-- Start of Right Panel -->
     <div class="col-12 col-md-9">
        <!-- Top sub-panel for city weather summary -->
-      <div id="summary" class="weather_summary">
-        <h4 id="city_header"> 
+      <div id="summary" class="weather_summary" >
+        <h4 id="city_header" style='vertical-align: bottom;'> 
           <span id="city-search-term"></span>
           <span id="city_img_rep"></span>
         </h4>
-        <!-- <h4 id="city_header"> <span id="repo-search-term"></span><span><img src="assets/images/night/11n@2x.png" ></span></h4> -->
-          <div id="repos-container" >
-              <div id="city_temp" class="list-item">
-                Temparature
-              </div>
-              <div id="city_wind" class="list-item">
-                Wind
-              </div>
-              <div id="city_hum" class="list-item">
-                Humidity
-              </div>
-              <div id="city_uvi"  class="list-item">
-                UV Index
-              </div>
-          </div>
+        <div>
+            <div id="city_temp" class="list-item">
+              
+            </div>
+            <div id="city_wind" class="list-item">
+            
+            </div>
+            <div id="city_hum" class="list-item">
+           
+            </div>
+            <div id="city_uvi"  class="list-item">
+             
+            </div>
+        </div>
       </div>
       <!-- bottom sub-panel for 5-day Forcast -->
       <div id="five_day_panel" class="fivedays justify-flex-start">
-        <h2>5-Day Forecast: <span id="repo-search-term"></span></h2>
-          <div class="flex-row justify-space-between">
-              <div class="five_day_card">
-                <h3 class="five_day_card_header">3/31/2021</h3>
-                <!-- <img id="weather_5day_icon_loc_1" > -->
-                 <!-- <img id="weather_icon_loc_1" src="assets/images/night/11n@2x.png" > -->
-                <div class="five_day_card_body"> 
-                  <img id="weather_5day_icon_loc_1" >
-                  <p>Temp</p>
-                  <p>Wind</p>
-                  <p>Humidity</p>
-                </div>
+        <h5>5-Day Forecast:</h5>
+          <div class="flex-row justify-space-between" id="five_day_forcast_panel">
+            <!-- <div class="five_day_card">
+              <h3 class="five_day_card_header">3/31/2021</h3>
+              <div class="five_day_card_body"> 
+                <img id="fiveday_weather_icon_loc_1" >
+                <p>Temp</p>
+                <p>Wind</p>
+                <p>Humidity</p>
               </div>
-              <div class="five_day_card">
-                <h3 class="five_day_card_header">4/01/2021</h3>
-                <div class="five_day_card_body"> 
-                  <p>Temp</p>
-                  <p>Wind</p>
-                  <p>Humidity</p>
-                </div>
-             
-              </div>
-              <div class="five_day_card">
-                <h3 class="five_day_card_header">4/01/2021</h3>
-                <div class="five_day_card_body"> 
-                  <p>Temp</p>
-                  <p>Wind</p>
-                  <p>Humidity</p>
-                </div>
-              </div>
-              <div class="five_day_card">
-                <h3 class="five_day_card_header">4/01/2021</h3>
-                <div class="five_day_card_body"> 
-                  <p>Temp</p>
-                  <p>Wind</p>
-                  <p>Humidity</p>
-                </div>
-              </div>
-              <div class="five_day_card">
-                <h3 class="five_day_card_header">4/01/2021</h3>
-                <div class="five_day_card_body"> 
-                  <p>Temp</p>
-                  <p>Wind</p>
-                  <p>Humidity</p>
-                </div>
-              </div>
+            </div> -->
+           
           </div>
       </div>
 
