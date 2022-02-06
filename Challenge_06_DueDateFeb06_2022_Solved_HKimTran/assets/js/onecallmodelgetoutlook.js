@@ -5,13 +5,15 @@ const TIMESTAMP = '@ ' ;
 const NIGHT_FORCAST = 'n';
 const NIGHT_FORCAST_DIR = "assets/images/night/";
 const DAY_FORCAST_DIR = "assets/images/";
-const COMMON_FILE_EXT = "@2x.png"
+const COMMON_FILE_EXT = "@2x.png" //image made available per curtesy of openweathermap.org
 const OPEN_PARENTHESES = '(';
 const CLOSE_PARENTHESES = ')';
-const TEMPERATURE_START = 'Temp: ';
-const HUMIDITY_START = 'Humidity: ';
-const WIND_START = "Wind: ";
-const UVINDEX = "UV Index: "
+const CITY_CURR_NIGHT_FORCAST_DIR = "assets/images/currentheader/night/";
+const CITY_CURR_DAY_FORCAST_DIR = "assets/images/currentheader/";
+const TEMPERATURE_START = '<strong>Temp: </strong>';
+const HUMIDITY_START = '<strong>Humidity: </strong>';
+const WIND_START = "<strong>Wind: </strong>";
+const UVINDEX = "<strong>UV Index: </strong>"
 
 const TEMPERATURE_END = ' &deg;F'; // Fahrenheit unit
 const HUMIDITY_END = '%'; 
@@ -24,7 +26,7 @@ var lonParas = STRING_EMPTY;
 let searchRecord = [];
 let searchClick = 0;
 
-// Source: https://www.epa.gov/sunsafety/uv-index-scale-0 // non-negative
+// Source: https://www.epa.gov/sunsafety/uv-index-scale-0 
 const uvIndexColorCodes = {
    two_or_less_green : new Array("green", "Low/Favorable"),
    three_to_five_yellow: new Array("yellow", "Moderate"),
@@ -32,7 +34,7 @@ const uvIndexColorCodes = {
    eight_or_above_red: new Array("red", "Severely High")
 }
 
-// -- Only want Current and Daily so we exclude minutely, hourly and alerts
+// -- Only want Current and Daily so we exclude minutely, hourly and alerts, imperial for unit system
 apiCityUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city_queryparas + "&units=imperial&appid=70086082b66a96f76b891285bfdc0149";
 apiOneCallCurrent =  "https://api.openweathermap.org/data/2.5/onecall?lat=" + latParas + "&lon=" + lonParas + "&exclude=hourly,minutely,alerts&appid=70086082b66a96f76b891285bfdc0149";
 apiOneCallCurrentWichita = "https://api.openweathermap.org/data/2.5/onecall?lat=37.6922&lon=-97.3375&exclude=hourly,minutely,alerts&units=imperial&appid=70086082b66a96f76b891285bfdc0149";
@@ -40,12 +42,13 @@ apiOneCallCurrentWichita = "https://api.openweathermap.org/data/2.5/onecall?lat=
 function renderLandingPage(){
    $("#summary").hide(200);
    $("#summary").show(1000);
-   // console.log("Tell me about searchRecord array-length: ") + searchRecord.length;
+   $("#city_name").focus()
+   // console.log("searchRecord array-length: ") + searchRecord.length;
    renderItemSearchHistory()
 }
 // Turns visibility on or off via jquery methods
 function setHistoryColumnVisibility(currentLocalStorageSize){
-   alert(currentLocalStorageSize.length);
+   // alert(currentLocalStorageSize.length);
    if((currentLocalStorageSize > 0)||(searchClick > 0)) 
    { 
       $("#pole_blue_theme").show(); 
@@ -58,8 +61,6 @@ function setHistoryColumnVisibility(currentLocalStorageSize){
    }
 }
 
-// var keyaliasValues = []; // no need extra
-
 // Determines whether to display item history if history exists when page first loads - key/value approach
 function renderItemSearchHistory(){
    currentLocalStorageSize = localStorage.length;
@@ -70,7 +71,6 @@ function renderItemSearchHistory(){
          let keyalias = localStorage.key(i);
          var itemRowValueOfKey = JSON.parse(localStorage.getItem(keyalias));
          var valueOfKeyAsDate = moment(itemRowValueOfKey);
-         // keyaliasValues.push(valueOfKeyAsDate);
 
          // different approach
          var searchByClicking = {
@@ -90,7 +90,6 @@ function renderItemSearchHistory(){
          return (momentObjLeft.searchDateTime).diff((momentObjRight.searchDateTime))
       });
 
-      // console.log(keyaliasValues);      
       console.log(searchRecord); // sorted array asc
       
       // -- remove old children div before append new div of new city 
@@ -116,7 +115,8 @@ function renderItemSearchHistory(){
    }
 }
 
-// Determines what to display for UV index button of current city weather
+// Rounding decimal to whole number indexes - source https://www.epa.gov/sunsafety/uv-index-scale-0  // non-negative
+// Determines what to display (color, decimal mesurement treatment) for UV index button of current city weather
 function getUVIndexButtonInfo(measure_data){
    var num = Math.round((measure_data)); 
    // alert(num)
@@ -148,9 +148,8 @@ function getUVIndexButtonInfo(measure_data){
    return metrics;
 }
 
-//-------------------------------------------- END OF FUNCTION DECLARATIONS ---------------------------------------------------------/
+//-----------------------------------------------------------------------------------------------------------------------/
 
-// In use
 // Generic function that displays all data returned in One Call featured at openweathermap.org
 var displayCityForcastPerOneCall = function(weather_data, cityname) {
    console.log(weather_data);
@@ -159,11 +158,11 @@ var displayCityForcastPerOneCall = function(weather_data, cityname) {
    var cityNameForHeader = cityname + SPACE + OPEN_PARENTHESES + initialCurrentDate.format("M/DD/YYYY") + CLOSE_PARENTHESES;
   
    // clear old content
-   $("#city-search-term").html(STRING_EMPTY);
+   $("#city_search_term").html(STRING_EMPTY);
    $("#city_temp").html(STRING_EMPTY);
-   $("#city_wind").text(STRING_EMPTY); 
-   $("#city_hum").text(STRING_EMPTY);
-   $("#city_uvi").text(STRING_EMPTY);
+   $("#city_wind").html(STRING_EMPTY); 
+   $("#city_hum").html(STRING_EMPTY);
+   $("#city_uvi").html(STRING_EMPTY);
 
    // var btnUVindexInfo = getUVIndexButtonInfo('7.88') // Test only, rounded up to 8
    var btnUVindexInfo = getUVIndexButtonInfo(weather_data.current.uvi)
@@ -172,16 +171,16 @@ var displayCityForcastPerOneCall = function(weather_data, cityname) {
                .css("background-color", btnUVindexInfo.uvIndexColor)
                .attr("title", btnUVindexInfo.uvIndexDesc)
 
-   $("#city-search-term").text(cityNameForHeader);
+   $("#city_search_term").text(cityNameForHeader);
    $("#city_temp").html(TEMPERATURE_START + weather_data.current.temp + TEMPERATURE_END);
-   $("#city_wind").text(WIND_START + weather_data.current.wind_speed + WIND_END);
-   $("#city_hum").text(HUMIDITY_START +  weather_data.current.humidity + HUMIDITY_END);
-   $("#city_uvi").text(UVINDEX);
+   $("#city_wind").html(WIND_START + weather_data.current.wind_speed + WIND_END);
+   $("#city_hum").html(HUMIDITY_START +  weather_data.current.humidity + HUMIDITY_END);
+   $("#city_uvi").html(UVINDEX);
    $("#city_uvi").append(btnUVindex);
 
    var img_file = weather_data.current.weather[0].icon.toLocaleLowerCase() ;  // alert(img_file);
-   var imgPathDay = DAY_FORCAST_DIR + img_file + COMMON_FILE_EXT;
-   var imgPathNite = NIGHT_FORCAST_DIR + img_file + COMMON_FILE_EXT;
+   var imgPathDay = CITY_CURR_DAY_FORCAST_DIR + img_file + COMMON_FILE_EXT;
+   var imgPathNite = CITY_CURR_NIGHT_FORCAST_DIR + img_file + COMMON_FILE_EXT;
 
    var citySpanGraphics = $("<img>")
    if(img_file.includes(NIGHT_FORCAST.toLocaleLowerCase())){
@@ -206,7 +205,7 @@ var displayCityForcastPerOneCall = function(weather_data, cityname) {
       $("#five_day_forcast_panel").empty();
    }
 
-   //----------------------------END OF DISPLAY FOR TOP PANEL SUMMARY  -----------------------------//
+   //----------------------------END OF TOP PANEL SUMMARY  -----------------------------//
 
    var fiveday_forcast  = [];
    for(var i = 0; i < 5; i++){
@@ -220,7 +219,7 @@ var displayCityForcastPerOneCall = function(weather_data, cityname) {
          wind: STRING_EMPTY, 
          iconfile: STRING_EMPTY
       }
-      weatherNextDay.date = moment(initialCurrentDate).add(i + 1, 'day');
+      weatherNextDay.date = moment(initialCurrentDate).add(i + 1, 'day'); // Get the next day in each iteration until 5th day's reached
       weatherNextDay.icon = weather_data.daily[i].weather[0].icon.toLocaleLowerCase()
       weatherNextDay.description = weather_data.daily[i].weather[0].description;
 
@@ -249,8 +248,8 @@ var displayCityForcastPerOneCall = function(weather_data, cityname) {
       var fivedayCardBody = $("<div>").addClass("five_day_card_body")
                            .append(fivedayCardWeatherImg)
                            .append( $("<p>").html(TEMPERATURE_START + fiveday_forcast[j].temp + TEMPERATURE_END))
-                           .append( $("<p>").text(WIND_START + fiveday_forcast[j].wind + WIND_END))
-                           .append( $("<p>").text(HUMIDITY_START +  fiveday_forcast[j].humidity + HUMIDITY_END));
+                           .append( $("<p>").html(WIND_START + fiveday_forcast[j].wind + WIND_END))
+                           .append( $("<p>").html(HUMIDITY_START +  fiveday_forcast[j].humidity + HUMIDITY_END));
 
       var fivedayCardJquery = $("<div>").addClass("five_day_card");
       fivedayCardJquery.append(fivedayCardHeader);
@@ -268,13 +267,12 @@ var displayCityForcastPerOneCall = function(weather_data, cityname) {
   
  };
 
-// In use
+
 // Get everything forcast for default location - Wichita - call made at the bottom of page
 var getOneCallForcastWichitaAsDefault = function() 
 {  
    var apiUrl = apiOneCallCurrentWichita;
    // console.log(apiUrl);
-   // check if api returned any repos   
    fetch(apiUrl)
       .then(function(weather_response) 
       {
@@ -300,9 +298,9 @@ var getOneCallForcastWichitaAsDefault = function()
 
 }; 
 
-// In use
+
 // Called by getWeatherForcastPerCity() at which lon and lat are made available by passing city-name
-// Must know lattitude and longtitude to make a call to this middle-man function to get the uvi
+// Must know lattitude and longtitude to make a call to this middle-man function to get the uvi info
 var getOneCallForcast = function(weather_data_has_lon_lat_city_info) 
 {  
    var city = weather_data_has_lon_lat_city_info.name;
@@ -315,7 +313,7 @@ var getOneCallForcast = function(weather_data_has_lon_lat_city_info)
    
    // console.log("Inside getOneCallForcast: " + apiOneCallCurrent);
 
-   // check if api returned any repos   
+      
    fetch(apiOneCallCurrent)
       .then(function(weather_response) 
       {
@@ -343,7 +341,6 @@ var getOneCallForcast = function(weather_data_has_lon_lat_city_info)
 var citySearchFormEl = document.querySelector("#city_form");
 var cityInputEl = document.querySelector("#city_name");
 
-// In Use
 // Generic function - called when button Search is clicked, extract longtitude and lattitude as a result
 var getWeatherForcastPerCity = function(cityname) 
 {  
@@ -362,7 +359,7 @@ var getWeatherForcastPerCity = function(cityname)
    city_queryparas = cityname;
    apiCityUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city_queryparas + "&units=imperial&appid=70086082b66a96f76b891285bfdc0149";
    // console.log("Inside getWeatherForcastPerCity : " + apiCityUrl);
-   // check if api returned any repos   
+      
    fetch(apiCityUrl)
       .then(function(weather_response) 
       {
@@ -382,7 +379,7 @@ var getWeatherForcastPerCity = function(cityname)
                console.log("Error: Weather Data Not Found"); // status 400
             }
          
-      })// ; remove ; bc it's not ended yet
+      })// ; remove semicolon bc it's not ended yet
       .catch(function(error){
          console.log("An error has occured: " + error);
       }); // it ends here
@@ -404,7 +401,7 @@ var getWeatherForcastPerCity = function(cityname)
       $("#pole_blue_theme").append(itemHistory);
 };  
 
-// Button click event handler
+// Button-click event handler
 var formSubmitHandler = function(event){
    event.preventDefault();
    var cityname = cityInputEl.value.trim();
@@ -419,5 +416,5 @@ var formSubmitHandler = function(event){
 
 citySearchFormEl.addEventListener("submit", formSubmitHandler);
 
-renderLandingPage();
+renderLandingPage(); // default to City of Wichita weather
 getOneCallForcastWichitaAsDefault();
