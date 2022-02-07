@@ -547,6 +547,27 @@ var collectReportDataForSTATDisplay = function(){
    console.log("Id is: " + reportedDataObj.playerid);
    console.log("Score is: " + reportedDataObj.score);
 
+   /////////////// It is the 1st time the player takes the quiz ////////////////////////
+   if ((!reportedDataObj.playerid) || (!reportedDataObj.score))
+   {
+      saveScoreReport(liveScoreDataObj);
+
+      var slideSelected = document.querySelector("#quiz_report_panel")
+      slideSelected.style.display = "none"; // close itself
+   
+      // -- close out a couple other things
+      var separator = document.getElementById("slide_divider");
+      separator.style.display = "none";
+      var ans_reponse = response = document.getElementById("quiz_answer_response")
+      ans_reponse.style.display = "none";
+
+      var highScoreBox = document.getElementById("high_score");
+      highScoreBox.value = liveScoreDataObj.playerid + HYPHENAGE + liveScoreDataObj.score;
+
+      return;
+   }
+   ////////////////////////////////////////////////////////////////////////////////
+
    // Display purpose only
    var highScoreBox = document.getElementById("high_score");
    var whatInsideBox = liveScoreDataObj.playerid + HYPHENAGE + liveScoreDataObj.score;
