@@ -68,11 +68,11 @@ function renderItemSearchHistory(){
    if(currentLocalStorageSize){
       searchRecord.length = 0;
       for(var i=0; i < currentLocalStorageSize; i++) {
+          // different approach
          let keyalias = localStorage.key(i);
          var itemRowValueOfKey = JSON.parse(localStorage.getItem(keyalias));
-         var valueOfKeyAsDate = moment(itemRowValueOfKey);
-
-         // different approach
+         // var valueOfKeyAsDate = moment(itemRowValueOfKey);
+        
          var searchByClicking = {
             searchID: itemRowValueOfKey.searchID,
             searchDateTime: moment(itemRowValueOfKey.searchDateTime),
