@@ -34,6 +34,9 @@ header {
   justify-content: space-between;
   flex-wrap: wrap;
 
+  background: linear-gradient(var(--secondary-color), var(--tertiary-color));
+  background: -webkit-linear-gradient(var(--secondary-color), var(--tertiary-color));
+
   /* Add Safari's vendor prefix to the sticky header to make sure it will be supported by Safari*/
   position: -webkit-sticky;
   /* Tells the browser to "stick" the element at the very top of the viewport */
@@ -42,6 +45,7 @@ header {
   /* Keep this header element on top of the stack, aka to the front */
   z-index: 9999;
   /* To avoid future conflicts although the number seems like overkill - per lesson note */
+
 }
 
 header h1 {
@@ -102,6 +106,9 @@ footer {
   background: var(--primary-color);
   width: 100%;
   padding: 30px 35px 15px 35px;
+ 
+  /* background: linear-gradient(var(--tertiary-color), var(--secondary-color));
+  background: -webkit-linear-gradient(var(--tertiary-color), var(--secondary-color)); */
   /* uncomment this snippet when there are 2 or more content entities */
   /* display: flex;
   flex-wrap: wrap;
@@ -144,6 +151,9 @@ section{
   justify-content: right;
   flex-wrap: wrap;
   align-items: flex-end; /*in case h3 doesn't get pushed down and there are 2 or more content entities*/
+  border-bottom: 1px solid var(--secondary-color);
+  border-top: 0 solid var(--primary-color);
+ 
 }
 
 .hero-greeting {   
@@ -297,7 +307,7 @@ flex-wrap: wrap;
   border: 1px solid rgb(207,169,156);
   max-width: 100%;
   max-height: 100%;    
-  opacity: 60%;  
+  opacity: 65%;  
 }
 
 /* .step-text h4 {
@@ -551,8 +561,8 @@ text-align: justify;
 
   .step-text img{
     border: 1px solid rgb(207,169,156);
-    max-width: 80%;
-    max-height: 40%;
+    max-width: 65%;
+    max-height: 350%;
     margin-top: 20px;
   }
 
@@ -688,7 +698,7 @@ text-align: justify;
     
   .step-text img{
     border: 1px solid rgb(207,169,156);
-    max-width: 60%;
+    max-width: 55%;
     max-height: 16%;
     margin-top: 5px;
     margin-bottom: 0;
