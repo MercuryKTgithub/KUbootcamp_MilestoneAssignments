@@ -5,10 +5,11 @@
   --tertiary: rgb(4, 87, 136);  
   --light-dark: rgb(3, 113, 160);  
   --dark:  rgb(4, 90, 139);  
-  --gray_tone_light: #adcddd;
+  --gray_tone_light: rgb(172, 210, 230);  /*rgb(173, 205, 221);*/
   --gray_tone_medium: rgb(60,92,108);
-  --weather_light: rgb(210, 232, 243);  
+  --weather_light: rgb(212, 234, 247);  
   --weather_card: rgb(36, 122, 160);  
+  --weather_card_light: rgb(98, 187, 227);
   --border-radius: .3rem;
   --lucida_input_output_font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode' ;
   
@@ -159,9 +160,9 @@ p {
   background-image: -webkit-gradient(linear,
                                     right bottom,
                                     right top,
-                                    color-stop(0.88, var(--gray_tone_light)),
-                                    color-stop(0.69, var(--essential)),
-                                    color-stop(0.06, var(--gray_tone_light))); 
+                                    color-stop(0.96, var(--gray_tone_light)),
+                                    color-stop(0.76, var(--essential)),
+                                    color-stop(0.22, var(--weather_card_light))); 
 }
 
 .weather_summary img{
@@ -186,7 +187,7 @@ p {
   font-size: 1.1rem;
   cursor: crosshair;  
   padding-top: 3px;
-  padding-bottom: 3px;
+  padding-bottom: 2px;
 }
 
 .weather_summary .btnUVIDarkText{
@@ -194,14 +195,14 @@ p {
   min-width: 59px;
   min-height: 34px;
   margin: 0 8px ;
-  border: 1px solid var(--gray_tone_light);
+  border: 1px solid var(--weather_card);
   border-radius: 4px;
   color: var(--gray_tone_medium);
   background-color: transparent;
   text-shadow: 1px 1px 1px  white;
   font-size: 1.1rem;
   cursor: crosshair;
-  padding-top: 3px;
+  padding-top: 4px;
   padding-bottom: 3px;
 }
 
