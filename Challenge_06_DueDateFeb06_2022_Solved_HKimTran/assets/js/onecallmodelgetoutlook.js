@@ -14,7 +14,7 @@ const TEMPERATURE_START = '<strong>Temp: </strong>';
 const HUMIDITY_START = '<strong>Humidity: </strong>';
 const WIND_START = "<strong>Wind: </strong>";
 const UVINDEX = "<strong>UV Index: </strong>"
-
+const UNIQUE_STORAGE_ID = "MercuryKT";
 const TEMPERATURE_END = ' &deg;F'; // Fahrenheit unit
 const HUMIDITY_END = '%'; 
 const WIND_END = " MPH";
@@ -109,15 +109,23 @@ function renderItemSearchHistory(){
       for(var i=0; i < currentLocalStorageSize; i++) {
           // different approach
          let keyalias = localStorage.key(i);
-         var itemRowValueOfKey = JSON.parse(localStorage.getItem(keyalias));
-         // var valueOfKeyAsDate = moment(itemRowValueOfKey);
-        
-         var searchByClicking = {
-            searchID: itemRowValueOfKey.searchID,
-            searchDateTime: moment(itemRowValueOfKey.searchDateTime),
-            searchTerm: itemRowValueOfKey.searchTerm }         
+         // console.log(keyalias); // testing only - retained
+         let itemRowValueOfKey;
+         if(keyalias.includes(UNIQUE_STORAGE_ID)){
+            itemRowValueOfKey = JSON.parse(localStorage.getItem(keyalias));
+
+            var searchByClicking = {
+               searchID: itemRowValueOfKey.searchID,
+               searchDateTime: moment(itemRowValueOfKey.searchDateTime),
+               searchTerm: itemRowValueOfKey.searchTerm }         
+            
+            searchRecord.push(searchByClicking);
+         }
+         else{
+            localStorage.removeItem(localStorage.key(i));
+            // alert("I romoved it"); // testing only - retained
+         }
          
-         searchRecord.push(searchByClicking);
       }
 
       // // searchRecord.sort(function(a, b){
@@ -410,7 +418,7 @@ var getWeatherForcastPerCity = function(cityname)
       searchTerm: cityname}
 
    searchRecord.push(searchByClicking);
-   localStorage.setItem(searchByClicking.searchTerm + UNDERSCORE + searchByClicking.searchID, JSON.stringify(searchByClicking));
+   localStorage.setItem(searchByClicking.searchTerm + UNDERSCORE + searchByClicking.searchID + UNDERSCORE + UNIQUE_STORAGE_ID, JSON.stringify(searchByClicking));
    
    city_queryparas = cityname;
    apiCityUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city_queryparas + "&units=imperial&appid=70086082b66a96f76b891285bfdc0149";

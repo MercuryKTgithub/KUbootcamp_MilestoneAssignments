@@ -157,10 +157,10 @@ p {
   border: 2px solid;
   /* background: linear-gradient(var(--primary), var(--gray_tone_light)); */
   background-image: -webkit-gradient(linear,
-                                    left bottom,
                                     left top,
-                                    color-stop(0.86, var(--essential)),
-                                    color-stop(0.68, var(--primary)),
+                                    left bottom,
+                                    color-stop(0.90, var(--essential)),
+                                    color-stop(0.62, var(--primary)),
                                     color-stop(0.16, var(--gray_tone_light))); 
 }
 
