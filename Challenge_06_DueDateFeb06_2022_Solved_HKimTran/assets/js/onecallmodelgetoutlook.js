@@ -61,6 +61,45 @@ function setHistoryColumnVisibility(currentLocalStorageSize){
    }
 }
 
+// Called when history city item "button" is clicked, extract longtitude and lattitude as a result
+function getWeatherForcastPerCityOmittedHistory(obj) 
+{  
+   var btn = obj;
+   city_queryparas = btn.id;
+   apiCityUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city_queryparas + "&units=imperial&appid=70086082b66a96f76b891285bfdc0149";
+      
+   fetch(apiCityUrl)
+      .then(function(weather_response) 
+      {
+            // console.log(weather_response); // 404 still display node Response, but headers ok property is false
+            if(weather_response.ok)
+            {
+               weather_response.json().then(function(weather_data_has_lon_lat_city_info)
+               {
+               // console.log("The underlined city is: " + weather_data_has_lon_lat_city_info.name);
+               // -- action
+               getOneCallForcast(weather_data_has_lon_lat_city_info);
+            });
+            }
+            else
+            {
+               console.log("Error: Weather Data Not Found"); // status 400
+            }
+         
+      }) 
+      .catch(function(error){
+         console.log("An error has occured: " + error);
+      });  
+ 
+      if((searchRecord.length > 0)||(searchClick > 0)) { 
+         $("#pole_blue_theme").show(); 
+         // alert("It should show up") // keep this
+      }else{
+         $("#pole_blue_theme").hide(); 
+         // alert("It should be hidden") // keep this
+      }
+}; 
+
 // Determines whether to display item history if history exists when page first loads - key/value approach
 function renderItemSearchHistory(){
    currentLocalStorageSize = localStorage.length;
@@ -105,14 +144,27 @@ function renderItemSearchHistory(){
          // console.log(searchTime.format('LTS')); // hour minute second
          var itemHistory = $("<input>").addClass("search_history")
                                     .attr("title", PRETEXT_HISTORY + searchDate.format('dddd, MMMM Do YYYY') + SPACE + TIMESTAMP + searchTime.format('LTS'))
-                                    .val((searchRecord[j].searchTerm));
+                                    .val((searchRecord[j].searchTerm))
+                                    .attr('id', searchRecord[j].searchTerm)
+                                    // .on("click", function(){ myFunction(); });  // works    
+                                    // .attr('onClick', 'myFunction(this);'); // works   
+                                    .attr('onClick', 'getWeatherForcastPerCityOmittedHistory(this);');   
+                                                   
          $("#pole_blue_theme").append(itemHistory);
+                         
       }
-
-      $("#pole_blue_theme").append(itemHistory);  
-      // console.log($("#pole_blue_theme").children())
-      // setHistoryColumnVisibility(currentLocalStorageSize);
    }
+}
+
+function myFunction(val){
+   alert("Where am I 1?");
+   // var btnClicked = $(event.target);
+   console.log(val);
+   var btn = val;
+   
+   alert(btn.id);
+   alert("Where am I 2?");
+   getWeatherForcastPerCityDetachedHistory(btn.id)
 }
 
 // Rounding decimal to whole number indexes - source https://www.epa.gov/sunsafety/uv-index-scale-0  // non-negative
@@ -164,12 +216,18 @@ var displayCityForcastPerOneCall = function(weather_data, cityname) {
    $("#city_hum").html(STRING_EMPTY);
    $("#city_uvi").html(STRING_EMPTY);
 
-   // var btnUVindexInfo = getUVIndexButtonInfo('7.88') // Test only, rounded up to 8
+   // var btnUVindexInfo = getUVIndexButtonInfo('3.88') // Test only, rounded up to 8
    var btnUVindexInfo = getUVIndexButtonInfo(weather_data.current.uvi)
+
    var btnUVindex = $("<button>").addClass("btnUVI")
-               .text(btnUVindexInfo.uvDecimalRead)
-               .css("background-color", btnUVindexInfo.uvIndexColor)
-               .attr("title", btnUVindexInfo.uvIndexDesc)
+                                 .text(btnUVindexInfo.uvDecimalRead)               
+                                 .css("background-color", btnUVindexInfo.uvIndexColor)
+                                 .attr("title", btnUVindexInfo.uvIndexDesc)
+
+   if(btnUVindexInfo.uvIndexColor.toLocaleLowerCase().includes("yellow")){
+      btnUVindex.removeClass("btnUVI");
+      btnUVindex.addClass("btnUVIDarkText");
+   }
 
    $("#city_search_term").text(cityNameForHeader);
    $("#city_temp").html(TEMPERATURE_START + weather_data.current.temp + TEMPERATURE_END);
@@ -267,7 +325,6 @@ var displayCityForcastPerOneCall = function(weather_data, cityname) {
   
  };
 
-
 // Get everything forcast for default location - Wichita - call made at the bottom of page
 var getOneCallForcastWichitaAsDefault = function() 
 {  
@@ -297,7 +354,6 @@ var getOneCallForcastWichitaAsDefault = function()
       });
 
 }; 
-
 
 // Called by getWeatherForcastPerCity() at which lon and lat are made available by passing city-name
 // Must know lattitude and longtitude to make a call to this middle-man function to get the uvi info
@@ -397,7 +453,11 @@ var getWeatherForcastPerCity = function(cityname)
        
       var itemHistory = $("<input>").addClass("search_history")
                                     .attr("title", PRETEXT_HISTORY + searchByClicking.searchDateTime.format('dddd, MMMM Do YYYY') + SPACE + TIMESTAMP + searchByClicking.searchDateTime.format('LTS'))
-                                    .val((searchByClicking.searchTerm));
+                                    .val((searchByClicking.searchTerm))
+                                    .attr('id', searchByClicking.searchTerm)
+                                    // .attr('onClick', 'myFunction(this);'); // works
+                                    .attr('onClick', 'getWeatherForcastPerCityOmittedHistory(this);'); 
+                                     
       $("#pole_blue_theme").append(itemHistory);
 };  
 
@@ -413,6 +473,8 @@ var formSubmitHandler = function(event){
       alert("Please enter a US city.");
    }
 }
+
+
 
 citySearchFormEl.addEventListener("submit", formSubmitHandler);
 

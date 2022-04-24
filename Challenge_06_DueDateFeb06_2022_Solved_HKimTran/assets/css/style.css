@@ -176,7 +176,7 @@ p {
 .weather_summary .btnUVI{
   font-weight: 500;
   min-width: 59px;
-  min-height: 30px;
+  min-height: 34px;
   margin: 0 8px ;
   border: 1px solid var(--gray_tone_light);
   border-radius: 4px;
@@ -184,7 +184,25 @@ p {
   background-color: transparent;
   text-shadow: 1px 1px 1px var(--gray_tone_light);
   font-size: 1.1rem;
+  cursor: crosshair;  
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.weather_summary .btnUVIDarkText{
+  font-weight: 500;
+  min-width: 59px;
+  min-height: 34px;
+  margin: 0 8px ;
+  border: 1px solid var(--gray_tone_light);
+  border-radius: 4px;
+  color: var(--gray_tone_medium);
+  background-color: transparent;
+  text-shadow: 1px 1px 1px  white;
+  font-size: 1.1rem;
   cursor: crosshair;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 #city_img_rep{
@@ -393,7 +411,7 @@ p {
   border: 0 solid var(--tertiary);
   outline: none;
   background-color: var(--gray_tone_light);
-  cursor: crosshair;
+  cursor: pointer;
 }
 
 /* HEIGHT | WIDTH UTILS */
