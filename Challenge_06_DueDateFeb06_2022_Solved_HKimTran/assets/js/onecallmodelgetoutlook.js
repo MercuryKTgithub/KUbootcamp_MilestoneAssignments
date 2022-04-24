@@ -123,7 +123,7 @@ function renderItemSearchHistory(){
          }
          else{
             localStorage.removeItem(localStorage.key(i));
-            // alert("I romoved it"); // testing only - retained
+            // alert("I removed it"); // testing only - retained
          }
          
       }
