@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Weather Dashboard Challenge - KU Coding Bootcamp HKT 2022</title>
+</head>
+
+<body class="flex_column min_100_vh">
+  <header class="hero">
+    <h1 class="app_title"> Weather Dashboard</h1>
+  </header>
+  <main class="flex-row justify_space_between">
+    <!-- Start of Left Panel -->
+    <div class="col-12 col-md-3">
+      <div class="card">
+        <h3 class="card_header">Search for a City:</h3>
+          <form id="city_form" class="card_body">
+            <input name="city_name" id="city_name" type="text" class="form_input" placeholder="Enter a City"/>
+            <button type="submit" class="btn">Search</button> 
+            
+          </form>
+      </div>
+      <div class="card_history">
+        <div class="card_body">
+          <div class="search_pole" id="pole_blue_theme">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Left Panel -->
+
+    <!-- Start of Right Panel -->
+    <div class="col-12 col-md-9">
+       <!-- Top sub-panel for city weather summary -->
+      <div id="summary" class="weather_summary" >
+        <h4 id="city_header" > 
+          <span id="city_search_term"></span>
+          <span id="city_img_rep"></span>
+        </h4>
+        <div>
+            <div id="city_temp" class="list_item">
+              
+            </div>
+            <div id="city_wind" class="list_item">
+            
+            </div>
+            <div id="city_hum" class="list_item">
+           
+            </div>
+            <div id="city_uvi"  class="list_item">
+             
+            </div>
+        </div>
+      </div>
+      <!-- bottom sub-panel for 5-day Forcast -->
+      <div id="five_day_panel" class="fivedays justify_flex_start">
+        <h5>5-Day Forecast:</h5>
+          <div class="flex-row justify_space_between" id="five_day_forcast_panel">
+            <!-- <div class="five_day_card">
+              <h3 class="five_day_card_header">3/31/2021</h3>
+              <div class="five_day_card_body"> 
+                <img id="fiveday_weather_icon_loc_1" >
+                <p>Temp</p>
+                <p>Wind</p>
+                <p>Humidity</p>
+              </div>
+            </div> -->
+            
+          </div>
+      </div>
+
+    </div>
+    <!-- End of Right Panel -->
+  </main>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+  <!-- jQuery UI is loaded after the core jQuery library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="assets/js/onecallmodelgetoutlook.js"></script>
+</body>
+
+</html>
