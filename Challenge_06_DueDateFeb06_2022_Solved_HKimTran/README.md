@@ -1,6 +1,6 @@
 ### Student's Full Name: Tran, Huong Kim  
-## KU Coding Bootcamp Challenge 05
-#### Work Day Scheduler Challenge 
+## KU Coding Bootcamp Challenge 06
+#### Weather Dashboard Challenge 
 
 
 ##### Live URL:  
