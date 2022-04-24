@@ -7,7 +7,7 @@
   --dark:  rgb(4, 90, 139);  
   --gray_tone_light: rgb(172, 207, 230);/*rgb(173, 205, 221);*/
   --gray_tone_medium: rgb(60,84,108);
-  --weather_light: rgb(212, 234, 247);  
+  --weather_light: rgb(210, 232, 243); /* rgb(212, 234, 247);  */
   --weather_card: rgb(36, 122, 160);  
   --weather_card_light: rgb(93, 180, 226);
   --border-radius: .3rem;
