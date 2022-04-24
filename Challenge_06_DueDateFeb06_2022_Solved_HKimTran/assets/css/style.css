@@ -157,11 +157,11 @@ p {
   border: 2px solid;
   /* background: linear-gradient(var(--primary), var(--gray_tone_light)); */
   background-image: -webkit-gradient(linear,
-                                    left top,
-                                    left bottom,
-                                    color-stop(0.90, var(--essential)),
-                                    color-stop(0.62, var(--primary)),
-                                    color-stop(0.16, var(--gray_tone_light))); 
+                                    right bottom,
+                                    right top,
+                                    color-stop(0.88, var(--gray_tone_light)),
+                                    color-stop(0.69, var(--essential)),
+                                    color-stop(0.06, var(--gray_tone_light))); 
 }
 
 .weather_summary img{
