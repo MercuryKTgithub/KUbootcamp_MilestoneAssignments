@@ -206,6 +206,14 @@ p {
   padding-bottom: 3px;
 }
 
+.weather_summary h4 {
+  font-size: 1.6rem ;
+}
+
+.weather_summary h4 span{
+  font-size: 1.4rem !important;
+}
+
 #city_img_rep{
   cursor: crosshair;
 }
@@ -445,6 +453,10 @@ p {
   justify-content: space-around;
 }
 
+.justify-space-evenly {
+  justify-content: space-evenly;
+}
+
 .justify_flex_start {
   justify-content: flex-start
 }
@@ -525,6 +537,15 @@ p {
 
 /* col-sm */
 @media screen and (min-width: 640px) {
+
+  .weather_summary h4 {  
+    font-size: 1.3rem !important;
+  }
+
+  .weather_summary h4 span{
+    font-size: 1.3rem !important;
+  }
+
   .col-sm-1 {
     flex: 0 0 calc(100% * 1 / 12 - 2%);
   }
